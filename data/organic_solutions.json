@@ -1,0 +1,861 @@
+{
+  "Apple___Apple_scab": {
+    "solution_name": "Bordeaux Mixture Spray",
+    "ingredients": [
+      "Copper sulfate (100g)",
+      "Hydrated lime (100g)",
+      "Water (10 liters)"
+    ],
+    "preparation": "Dissolve copper sulfate in 5L of water and lime in another 5L. Pour copper solution into lime solution while stirring continuously.",
+    "application": "Apply during green-tip and pink-bud stages as a protective shield. Spray every 7-10 days in wet spring weather.",
+    "cause": "Venturia inaequalis fungus, overwintering on fallen infected leaves.",
+    "symptoms": "Olive-green to brown velvety spots on leaves and fruit, causing leaf distortion and cracked fruit skin.",
+    "prevention_methods": "Rake and destroy fallen leaves in autumn. Prune tree canopy to maximize sunshine and wind penetration.",
+    "chemical_pesticides": {
+      "name": "Captan 50 WP or Myclobutanil",
+      "dosage": "2g per liter of water",
+      "safety_instructions": "Wear face mask and safety goggles. Extremely irritating to eyes. 7-day pre-harvest interval."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Organic compost & Boron supplements",
+      "quantity": "5 kg compost per tree + 10g Borax",
+      "application_timing": "Apply in early spring before bud break."
+    }
+  },
+  "Apple___Black_rot": {
+    "solution_name": "Garlic-Neem Botanical Spray",
+    "ingredients": [
+      "Garlic extract (50 ml)",
+      "Neem oil (30 ml)",
+      "Warm water (10 liters)",
+      "Liquid soap (2 tbsp)"
+    ],
+    "preparation": "Mix neem oil with soap in warm water to emulsify, then blend in garlic extract and stir thoroughly.",
+    "application": "Spray trees every 7-10 days starting at petal fall to protect developing fruit. Apply in the evening.",
+    "cause": "Botryosphaeria obtusa fungus, colonizing dead wood, pruned branches, and mummified fruit.",
+    "symptoms": "Frog-eye spots on leaves (purple rim, tan center), sunken black cankers on branches, and rotting fruit with concentric black rings.",
+    "prevention_methods": "Prune out dead branches and cankers during winter. Remove all mummified apples from the orchard.",
+    "chemical_pesticides": {
+      "name": "Thiophanate-methyl or Captan",
+      "dosage": "1.5g per liter of water",
+      "safety_instructions": "Use protective gloves. Do not contaminate garden ponds. Wash clothing worn during spraying separately."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Potassium nitrate & Calcium nitrate",
+      "quantity": "250g per tree",
+      "application_timing": "Split application: half in early spring, half after fruit harvest."
+    }
+  },
+  "Apple___Cedar_apple_rust": {
+    "solution_name": "Sulfur Fungicidal Spray",
+    "ingredients": [
+      "Wettable sulfur powder (3 tbsp)",
+      "Water (5 liters)"
+    ],
+    "preparation": "Mix sulfur powder with a little water to form a smooth paste, then dilute into the full volume of water.",
+    "application": "Apply at weekly intervals from pink-bud stage until petals fall to disrupt fungal spore germination.",
+    "cause": "Gymnosporangium juniperi-virginianae fungus, requiring both cedar/juniper trees and apple trees to complete its life cycle.",
+    "symptoms": "Bright yellow-orange spots on leaves with tiny black dots, leading to spore-bearing tubes on leaf undersides and early defoliation.",
+    "prevention_methods": "Remove nearby wild red cedars/junipers within a 1-mile radius if possible. Plant rust-resistant varieties.",
+    "chemical_pesticides": {
+      "name": "Myclobutanil or Triadimefon",
+      "dosage": "1.2g per liter of water",
+      "safety_instructions": "Harmful if swallowed. Keep out of reach of children and pets. Do not apply when temperature exceeds 30°C."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Phosphorus-rich Bone Meal & Compost",
+      "quantity": "1 kg per tree",
+      "application_timing": "Apply in late autumn to support root resilience through winter."
+    }
+  },
+  "Apple___healthy": {
+    "solution_name": "No treatment needed",
+    "ingredients": [],
+    "preparation": "N/A",
+    "application": "Apple tree is healthy. Continue pruning in winter and checking for pests.",
+    "cause": "Optimal tree hygiene and balanced orchard nutrition",
+    "symptoms": "Lush green canopy, clean fruits with smooth skin, and strong branch joints.",
+    "prevention_methods": "Perform yearly winter pruning, paint trunks to protect against sunscald, and maintain insect traps.",
+    "chemical_pesticides": {
+      "name": "N/A (Not required)",
+      "dosage": "None",
+      "safety_instructions": "None"
+    },
+    "fertilizer": {
+      "fertilizer_type": "Well-rotted sheep or cow manure",
+      "quantity": "15-20 kg per mature tree",
+      "application_timing": "Spread around the drip-line of the tree canopy in late winter."
+    }
+  },
+  "Blueberry___healthy": {
+    "solution_name": "No treatment needed",
+    "ingredients": [],
+    "preparation": "N/A",
+    "application": "Blueberry bush is healthy. Maintain acidic soil pH (4.5-5.5) and keep soil evenly moist.",
+    "cause": "Optimal soil acidity and well-draining moist conditions",
+    "symptoms": "Vibrant green leaves, reddish-brown healthy canes, and abundant blossoms or berries.",
+    "prevention_methods": "Apply pine bark or peat moss mulch. Avoid overhead watering to prevent fruit rots.",
+    "chemical_pesticides": {
+      "name": "N/A (Not required)",
+      "dosage": "None",
+      "safety_instructions": "None"
+    },
+    "fertilizer": {
+      "fertilizer_type": "Ammonium sulfate (acidifying fertilizer)",
+      "quantity": "30g per mature bush",
+      "application_timing": "Apply in early spring before bud break."
+    }
+  },
+  "Cherry_(including_sour)___Powdery_mildew": {
+    "solution_name": "Potassium Bicarbonate Spray",
+    "ingredients": [
+      "Potassium bicarbonate (3 tbsp)",
+      "Liquid horticultural soap (1 tsp)",
+      "Water (5 liters)"
+    ],
+    "preparation": "Dissolve potassium bicarbonate and soap thoroughly in water.",
+    "application": "Spray foliage thoroughly at first sign of white powdery spots, repeating every 7-10 days in warm dry weather.",
+    "cause": "Podosphaera clandestina fungus, favored by warm, dry climates with high relative humidity.",
+    "symptoms": "White powdery fungal patches on leaves and young shoots, causing leaves to curl upwards and drop prematurely.",
+    "prevention_methods": "Prune interior branches to increase sunlight and airflow. Avoid excessive nitrogen fertilizing.",
+    "chemical_pesticides": {
+      "name": "Myclobutanil or Tebuconazole",
+      "dosage": "1 ml per liter of water",
+      "safety_instructions": "Wear eye protection and gloves. Avoid spraying during bloom to protect pollinators. 14-day pre-harvest interval."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Silica and Potassium foliar spray",
+      "quantity": "5 ml per liter of water",
+      "application_timing": "Spray bi-weekly to strengthen leaf epidermal cell walls."
+    }
+  },
+  "Cherry_(including_sour)___healthy": {
+    "solution_name": "No treatment needed",
+    "ingredients": [],
+    "preparation": "N/A",
+    "application": "Cherry tree is healthy. Keep soil mulched and maintain routine pruning.",
+    "cause": "Good airflow and proper orchard care",
+    "symptoms": "Glossy green leaves, sturdy fruit spurs, and clear spotless bark.",
+    "prevention_methods": "Prune out crisscrossing branches. Apply dormant oil spray in late winter to suppress overwintering insect pests.",
+    "chemical_pesticides": {
+      "name": "N/A (Not required)",
+      "dosage": "None",
+      "safety_instructions": "None"
+    },
+    "fertilizer": {
+      "fertilizer_type": "Balanced Organic Fruit Tree Fertilizer (10-10-10)",
+      "quantity": "500g per tree",
+      "application_timing": "Apply in early spring as new growth starts."
+    }
+  },
+  "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot": {
+    "solution_name": "Neem-Turmeric Bio-Fungicide",
+    "ingredients": [
+      "Neem oil (2 tbsp)",
+      "Turmeric powder (2 tbsp)",
+      "Liquid soap (1 tsp)",
+      "Water (1 liter)"
+    ],
+    "preparation": "Mix neem oil with soap to emulsify, stir in turmeric powder, then dilute with water.",
+    "application": "Spray foliage every 7 days when gray lesions first appear, especially in humid and rainy conditions.",
+    "cause": "Cercospora zeae-maydis fungus, surviving in corn residue on the soil surface.",
+    "symptoms": "Rectangular, tan to gray lesions with sharp parallel borders confined between leaf veins, causing premature leaf death.",
+    "prevention_methods": "Rotate crops with non-grass crops (like soybean). Till corn debris into the soil or practice residue management.",
+    "chemical_pesticides": {
+      "name": "Pyraclostrobin + Fluxapyroxad or Azoxystrobin",
+      "dosage": "1.5 ml per liter of water",
+      "safety_instructions": "Apply at early tasseling stage. Toxic to aquatic life. Wear protective clothing and respirator."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Potash (MOP) & Zinc sulfate",
+      "quantity": "25 kg Potash + 10 kg Zinc per acre",
+      "application_timing": "Apply as basal dose during final soil preparation."
+    }
+  },
+  "Corn_(maize)___Common_rust_": {
+    "solution_name": "Turmeric-Garlic Fungicide",
+    "ingredients": [
+      "Turmeric powder (2 tbsp)",
+      "Garlic cloves (6)",
+      "Water (1 liter)"
+    ],
+    "preparation": "Crush garlic, mix with turmeric powder into water, and let steep for 12 hours before straining.",
+    "application": "Spray on leaves every 5-7 days at the first sign of rust-colored pustules.",
+    "cause": "Puccinia sorghi fungus, spreading via windborne spores in high humidity (90%+).",
+    "symptoms": "Powdery, cinnamon-brown pustules on both upper and lower leaf surfaces, causing leaves to yellow and dry.",
+    "prevention_methods": "Plant rust-resistant hybrids, control weed hosts, and destroy infected residues post-harvest.",
+    "chemical_pesticides": {
+      "name": "Propiconazole or Pyraclostrobin",
+      "dosage": "1.5-2 ml per liter of water",
+      "safety_instructions": "Avoid direct inhalation. Wear chemical-resistant gloves. Protect local water systems from chemical runoff."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Urea (Nitrogen source) & Zinc Sulfate",
+      "quantity": "20g Urea + 5g Zinc per plant",
+      "application_timing": "Side-dress at knee-high growth stage (V6 stage) to help crop withstand stress."
+    }
+  },
+  "Corn_(maize)___Northern_Leaf_Blight": {
+    "solution_name": "Neem Oil & Soap Spray",
+    "ingredients": [
+      "Neem oil (2 tbsp)",
+      "Liquid soap (1 tsp)",
+      "Water (1 liter)"
+    ],
+    "preparation": "Mix neem oil with soap first to emulsify, then dilute into water.",
+    "application": "Spray weekly across the whole plant canopy, ensuring good leaf coverage on both sides.",
+    "cause": "Exserohilum turcicum fungus, thriving in moderate temperatures and prolonged wetness.",
+    "symptoms": "Long, cigar-shaped grayish-green lesions on leaves, which later turn tan and dry out.",
+    "prevention_methods": "Rotate crops with soybeans or alfalfa, perform deep tillage to bury crop debris, and manage drainage.",
+    "chemical_pesticides": {
+      "name": "Azoxystrobin + Propiconazole formulation",
+      "dosage": "2 ml per liter of water",
+      "safety_instructions": "Toxic to fish and aquatic invertebrates. Do not spray within 30 days of harvest. Wear respirator."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Superphosphate & Ammonium Sulfate",
+      "quantity": "40g per plant",
+      "application_timing": "Apply at planting as basal dose, then side-dress at tassel formation."
+    }
+  },
+  "Corn_(maize)___healthy": {
+    "solution_name": "No treatment needed",
+    "ingredients": [],
+    "preparation": "N/A",
+    "application": "Plant appears healthy. Continue regular field monitoring and check irrigation.",
+    "cause": "Adequate spacing and nitrogen availability",
+    "symptoms": "Strong, upright stalk, vibrant green leaves with no long lesions or brown rust pustules.",
+    "prevention_methods": "Adopt broad crop rotation, manage corn borers, and perform soil checks.",
+    "chemical_pesticides": {
+      "name": "N/A (Not required)",
+      "dosage": "None",
+      "safety_instructions": "None"
+    },
+    "fertilizer": {
+      "fertilizer_type": "Ammonium Nitrate or Compost manure",
+      "quantity": "50g per plant",
+      "application_timing": "Apply in splits: 1/3 at sowing, 1/3 at knee-high, and 1/3 at tasseling."
+    }
+  },
+  "Grape___Black_rot": {
+    "solution_name": "Copper Sulfate & Lime Spray (Bordeaux)",
+    "ingredients": [
+      "Copper sulfate (50g)",
+      "Hydrated lime (50g)",
+      "Water (5 liters)"
+    ],
+    "preparation": "Dissolve compounds in separate water containers, mix copper into lime while stirring.",
+    "application": "Apply every 10-14 days starting at bud break until fruit set. Do not apply near harvest.",
+    "cause": "Guignardia bidwellii fungus, overwintering in mummified berries and cane cankers.",
+    "symptoms": "Small, circular tan spots on leaves, and berries that shrivel, turn hard, black, and resemble raisins.",
+    "prevention_methods": "Prune vines to open the canopy to air, remove mummified grapes, keep vines tied off the ground.",
+    "chemical_pesticides": {
+      "name": "Mancozeb or Ziram or Myclobutanil",
+      "dosage": "2g per liter of water",
+      "safety_instructions": "Highly toxic to fish. Do not apply directly to water. Wear respirator and goggles. Pre-harvest interval is 66 days for Mancozeb on grapes."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Potassium Sulfate & Chelated Iron",
+      "quantity": "100g per vine",
+      "application_timing": "In early spring just as shoots begin to emerge."
+    }
+  },
+  "Grape___Esca_(Black_Measles)": {
+    "solution_name": "Trichoderma Biocontrol Soil Drench",
+    "ingredients": [
+      "Trichoderma harzianum formulation (50g)",
+      "Water (10 liters)",
+      "Jaggery (50g as microbial feed)"
+    ],
+    "preparation": "Mix Trichoderma and jaggery into water and allow to stand for 2 hours.",
+    "application": "Drench around root zones and paint pruning wounds with paste immediately after winter trimming.",
+    "cause": "Fhaeomoniella chlamydospora and Fomitiporia fungal complex entering through pruning wounds.",
+    "symptoms": "Tiger-stripe discoloration on leaves (interveinal yellow/brown necrosis), dark purple spotting on berries ('black measles'), and sudden vine apoplexy/wilting.",
+    "prevention_methods": "Disinfect pruning shears between vines with alcohol or bleach. Seal all large cuts with pruning paste.",
+    "chemical_pesticides": {
+      "name": "Fosetyl-Aluminium or Thiophanate-methyl paste",
+      "dosage": "Apply paste directly to cuts",
+      "safety_instructions": "Wear chemical-resistant gloves. Do not apply during rain to allow sealant to dry."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Humic acid & Seaweed extract",
+      "quantity": "50 ml per vine diluted in water",
+      "application_timing": "Apply in spring to stimulate new root formation and vascular healing."
+    }
+  },
+  "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)": {
+    "solution_name": "Neem Seed Kernel Extract (NSKE)",
+    "ingredients": [
+      "Neem seed kernel powder (500g)",
+      "Water (10 liters)",
+      "Liquid soap (2 tbsp)"
+    ],
+    "preparation": "Soak neem seed powder in water overnight, filter through a cloth, and add soap.",
+    "application": "Spray thoroughly on both upper and lower leaf surfaces every 10 days during warm humid weather.",
+    "cause": "Pseudocercospora vitis (Isariopsis clavispora) fungus, promoted by warm temperatures and frequent rains.",
+    "symptoms": "Irregular dark brown to black spots with yellowish halos on leaves, coalescing and causing premature defoliation.",
+    "prevention_methods": "Thin dense foliage to improve air circulation and sunlight. Clean dropped leaves post-harvest.",
+    "chemical_pesticides": {
+      "name": "Copper Oxychloride (COC) 50 WP",
+      "dosage": "2.5g per liter of water",
+      "safety_instructions": "Wear safety goggles and gloves. Do not spray during hottest hours of the day. 14-day pre-harvest interval."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Potassium Magnesium Sulfate (Sul-Po-Mag)",
+      "quantity": "40g per vine",
+      "application_timing": "Apply at fruit set stage."
+    }
+  },
+  "Grape___healthy": {
+    "solution_name": "No treatment needed",
+    "ingredients": [],
+    "preparation": "N/A",
+    "application": "Vines are healthy. Keep trellis pruned and tie loose canes.",
+    "cause": "Optimal trellis ventilation and sun exposure",
+    "symptoms": "Clear green fan-shaped leaves, firm green stems, healthy uniform grape clusters.",
+    "prevention_methods": "Perform canopy thinning, maintain high trellis systems, and clean pruning tools.",
+    "chemical_pesticides": {
+      "name": "N/A (Not required)",
+      "dosage": "None",
+      "safety_instructions": "None"
+    },
+    "fertilizer": {
+      "fertilizer_type": "Organic compost & Magnesium sulfate",
+      "quantity": "3 kg compost + 30g Epsom salts per vine",
+      "application_timing": "Apply in early spring before flowering."
+    }
+  },
+  "Orange___Haunglongbing_(Citrus_greening)": {
+    "solution_name": "Nutritional Zinc-Iron Foliar Boost & Neem Vector Spray",
+    "ingredients": [
+      "Zinc sulfate (10g)",
+      "Ferrous sulfate (10g)",
+      "Neem oil (30 ml)",
+      "Liquid soap (1 tsp)",
+      "Water (5 liters)"
+    ],
+    "preparation": "Dissolve micronutrients in water, emulsify neem oil with soap, and combine into solution.",
+    "application": "Spray trees every 14 days to suppress Asian Citrus Psyllid insect vectors and supplement deficient micronutrients.",
+    "cause": "Candidatus Liberibacter asiaticus bacterium, transmitted by the Asian Citrus Psyllid (Diaphorina citri).",
+    "symptoms": "Asymmetrical blotchy mottle on leaves, yellow shoots, small misshapen bitter green fruit that drops prematurely.",
+    "prevention_methods": "Plant only certified disease-free nursery stock. Control citrus psyllid vector vigorously using sticky traps and insecticidal sprays. Remove heavily declining trees.",
+    "chemical_pesticides": {
+      "name": "Imidacloprid or Thiamethoxam (for psyllid control)",
+      "dosage": "0.5 ml per liter of water",
+      "safety_instructions": "Highly toxic to bees. NEVER spray during bloom. Wear respirator and protective garments."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Citrus Micronutrient Mix (Zn, Fe, Mn, B, Mg)",
+      "quantity": "50g per tree",
+      "application_timing": "Apply at new leaf flush periods 3 times per year."
+    }
+  },
+  "Peach___Bacterial_spot": {
+    "solution_name": "Copper-Lime Dormant Spray",
+    "ingredients": [
+      "Copper hydroxide (30g)",
+      "Hydrated lime (30g)",
+      "Water (10 liters)"
+    ],
+    "preparation": "Mix copper hydroxide and lime into water thoroughly.",
+    "application": "Apply during dormant season and early spring before bud swell. Avoid high concentrations after bloom to prevent fruit russeting.",
+    "cause": "Xanthomonas arboricola pv. pruni bacteria, spreading via windblown rain in sandy soils.",
+    "symptoms": "Small angular purple-black spots on leaves that drop out leaving a 'shot-hole' appearance. Pitted lesions on peaches.",
+    "prevention_methods": "Avoid planting susceptible cultivars in wind-exposed sandy sites. Plant windbreaks.",
+    "chemical_pesticides": {
+      "name": "Oxytetracycline or Copper octanoate",
+      "dosage": "1.5g per liter of water",
+      "safety_instructions": "Do not exceed labeled seasonal limits. Wear mask and goggles. Pre-harvest interval is 21 days."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Balanced NPK plus Calcium",
+      "quantity": "200g per tree",
+      "application_timing": "Apply in early spring."
+    }
+  },
+  "Peach___healthy": {
+    "solution_name": "No treatment needed",
+    "ingredients": [],
+    "preparation": "N/A",
+    "application": "Peach tree is healthy. Maintain pruning and orchard floor weed control.",
+    "cause": "Good orchard management and balanced drainage",
+    "symptoms": "Vibrant lanceolate green leaves, smooth peach fruit, and sound bark.",
+    "prevention_methods": "Thin fruit early in season. Apply copper spray at autumn leaf fall to prevent peach leaf curl.",
+    "chemical_pesticides": {
+      "name": "N/A (Not required)",
+      "dosage": "None",
+      "safety_instructions": "None"
+    },
+    "fertilizer": {
+      "fertilizer_type": "Organic compost & Calcium nitrate",
+      "quantity": "5 kg compost + 150g calcium nitrate per tree",
+      "application_timing": "Apply in early spring before blossom."
+    }
+  },
+  "Pepper,_bell___Bacterial_spot": {
+    "solution_name": "Copper-Turmeric Antibacterial Spray",
+    "ingredients": [
+      "Turmeric powder (3 tbsp)",
+      "Copper oxychloride (10g)",
+      "Water (5 liters)",
+      "Sticker soap (1 tsp)"
+    ],
+    "preparation": "Mix turmeric powder and copper formulation in water, add soap and shake vigorously.",
+    "application": "Apply every 7 days at the first sign of water-soaked spots. Best applied late afternoon.",
+    "cause": "Xanthomonas campestris pv. vesicatoria bacteria, seed-borne and rain-splashed.",
+    "symptoms": "Small, raised, wart-like spots on leaves and stems, turning brown; leaves turn yellow and drop off, exposing fruit to sunscald.",
+    "prevention_methods": "Use clean seeds, rotate crops, avoid working in the field when plants are wet, and destroy crop residues.",
+    "chemical_pesticides": {
+      "name": "Streptomycin Sulfate or Copper Hydroxide",
+      "dosage": "1g streptomycin or 2g copper per liter",
+      "safety_instructions": "Use antibiotic formulations only in severe cases. Wear protective face mask. Do not inhale spray mist."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Calcium nitrate & Potassium nitrate",
+      "quantity": "20g per plant",
+      "application_timing": "Apply as side-dressing when first fruits set to prevent blossom end rot."
+    }
+  },
+  "Pepper,_bell___healthy": {
+    "solution_name": "No treatment needed",
+    "ingredients": [],
+    "preparation": "N/A",
+    "application": "Pepper plant is healthy. Support with stakes if fruit load is heavy.",
+    "cause": "Good soil drainage and seed selection",
+    "symptoms": "Lustrous green leaves, sturdy stem branches, uniform blossoms, firm peppers.",
+    "prevention_methods": "Prune lower branches, apply straw mulch, and install drip irrigation.",
+    "chemical_pesticides": {
+      "name": "N/A (Not required)",
+      "dosage": "None",
+      "safety_instructions": "None"
+    },
+    "fertilizer": {
+      "fertilizer_type": "Compost manure & Bone meal",
+      "quantity": "1 kg compost + 50g bone meal per plant",
+      "application_timing": "Apply in soil around the plant base at vegetative stage."
+    }
+  },
+  "Potato___Early_blight": {
+    "solution_name": "Garlic Oil Spray",
+    "ingredients": [
+      "Garlic cloves (8-10)",
+      "Mineral/vegetable oil (2 tbsp)",
+      "Water (1 liter)",
+      "Liquid soap (1 tsp)"
+    ],
+    "preparation": "Crush garlic and soak in oil for 24 hours. Strain, mix with water and soap.",
+    "application": "Spray every 5 days on affected foliage, focusing on the undersides of leaves.",
+    "cause": "Alternaria solani fungus, thriving when crops are stressed by poor nutrition or pests.",
+    "symptoms": "Concentric dark brown rings on older leaves, forming leathery spots. Yield is reduced due to premature defoliation.",
+    "prevention_methods": "Ensure optimal fertilizer application to prevent plant stress, rotate crops with non-solanaceous species.",
+    "chemical_pesticides": {
+      "name": "Difenoconazole or Chlorothalonil",
+      "dosage": "1.5 ml per liter of water",
+      "safety_instructions": "Wear boots, protective clothing, and protective eyewear. Do not spray during peak sun hours to prevent leaf scorching."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Well-composted Farm Yard Manure (FYM)",
+      "quantity": "2 kg per square meter (basal application)",
+      "application_timing": "Incorporate thoroughly into soil before planting tubers."
+    }
+  },
+  "Potato___Late_blight": {
+    "solution_name": "Cow Urine & Neem Solution",
+    "ingredients": [
+      "Cow urine (200 ml)",
+      "Neem oil (2 tbsp)",
+      "Water (5 liters)"
+    ],
+    "preparation": "Mix cow urine and neem oil into water, stir well, and let sit for 2-3 hours before use.",
+    "application": "Spray thoroughly on foliage every week; also drench soil around roots monthly to strengthen plant defense.",
+    "cause": "Phytophthora infestans, a highly destructive oomycete pathogen.",
+    "symptoms": "Irregular dark green to black water-soaked lesions on leaves, white fungal bloom on undersides in humid conditions, and rotting tubers underground.",
+    "prevention_methods": "Only plant certified seed potatoes, practice deep planting, destroy volunteer potato plants, and ensure proper hilling.",
+    "chemical_pesticides": {
+      "name": "Metalaxyl-M or Cymoxanil combined with Mancozeb",
+      "dosage": "2.5-3g per liter of water",
+      "safety_instructions": "Extremely toxic if inhaled. Use respirator. Do not allow livestock to graze in sprayed fields for 3 weeks."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Sulphate of Potash & Phosphorus-rich Bone Meal",
+      "quantity": "50g per square meter",
+      "application_timing": "At tuber initiation stage to increase root cell density."
+    }
+  },
+  "Potato___healthy": {
+    "solution_name": "No treatment needed",
+    "ingredients": [],
+    "preparation": "N/A",
+    "application": "Plant appears healthy. Maintain crop rotation and monitor regularly.",
+    "cause": "Perfect agronomic practices",
+    "symptoms": "Lush green leaves, sturdy foliage, firm stems, and normal leaf configuration.",
+    "prevention_methods": "Maintain crop cycles, use optimal drip irrigation, and maintain insect barriers.",
+    "chemical_pesticides": {
+      "name": "N/A (Not required)",
+      "dosage": "None",
+      "safety_instructions": "None"
+    },
+    "fertilizer": {
+      "fertilizer_type": "Balanced Organic NPK blend (5-10-10)",
+      "quantity": "60g per meter of row",
+      "application_timing": "Side-dress at first hilling (4-5 weeks after planting)."
+    }
+  },
+  "Raspberry___healthy": {
+    "solution_name": "No treatment needed",
+    "ingredients": [],
+    "preparation": "N/A",
+    "application": "Raspberry cane is healthy. Maintain trellis wire support and prune old fruited floricanes.",
+    "cause": "Proper cane thinning and good sunlight penetration",
+    "symptoms": "Bright green compound leaves, strong upright primocanes, and clear stems.",
+    "prevention_methods": "Prune out canes that have finished fruiting at ground level. Mulch with wood chips.",
+    "chemical_pesticides": {
+      "name": "N/A (Not required)",
+      "dosage": "None",
+      "safety_instructions": "None"
+    },
+    "fertilizer": {
+      "fertilizer_type": "Well-rotted compost & Potassium sulfate",
+      "quantity": "2 kg compost + 25g potash per meter of row",
+      "application_timing": "Apply in early spring as new primocanes emerge."
+    }
+  },
+  "Soybean___healthy": {
+    "solution_name": "No treatment needed",
+    "ingredients": [],
+    "preparation": "N/A",
+    "application": "Soybean crop is healthy. Check nodules on roots for active nitrogen fixation.",
+    "cause": "Proper Rhizobium inoculation and clean field cultivation",
+    "symptoms": "Trifoliate deep green leaves, sturdy stems, and uniform developing pods.",
+    "prevention_methods": "Practice 3-year crop rotation with corn or wheat. Manage aphids and leafhoppers.",
+    "chemical_pesticides": {
+      "name": "N/A (Not required)",
+      "dosage": "None",
+      "safety_instructions": "None"
+    },
+    "fertilizer": {
+      "fertilizer_type": "Single Super Phosphate (SSP) & Muriate of Potash (MOP)",
+      "quantity": "50 kg SSP + 25 kg MOP per acre",
+      "application_timing": "Apply as basal fertilizer at sowing."
+    }
+  },
+  "Squash___Powdery_mildew": {
+    "solution_name": "Baking Soda & Horticultural Oil Spray",
+    "ingredients": [
+      "Baking soda (1 tbsp)",
+      "Vegetable oil (1 tbsp)",
+      "Liquid dish soap (1/2 tsp)",
+      "Water (1 liter)"
+    ],
+    "preparation": "Mix baking soda, vegetable oil, and soap in water until completely emulsified.",
+    "application": "Spray thoroughly on both upper and lower leaf surfaces every 5-7 days at early sign of powdery mildew.",
+    "cause": "Podosphaera xanthii fungus, thriving in warm, dry weather with shaded foliage and high humidity.",
+    "symptoms": "White talcum-like powdery spots on leaf surfaces and petioles, leading to yellowing, browning, and leaf shriveling.",
+    "prevention_methods": "Plant in full sun with wide spacing. Water at the base with drip irrigation.",
+    "chemical_pesticides": {
+      "name": "Azoxystrobin or Trifloxystrobin",
+      "dosage": "1 ml per liter of water",
+      "safety_instructions": "Rotate chemical modes of action to prevent fungal resistance. 3-day pre-harvest interval."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Potassium silicate foliar feed",
+      "quantity": "3 ml per liter of water",
+      "application_timing": "Apply weekly to strengthen leaf epidermal resistance."
+    }
+  },
+  "Strawberry___Leaf_scorch": {
+    "solution_name": "Copper Soap (Copper Octanoate) Spray",
+    "ingredients": [
+      "Liquid copper soap formulation (30 ml)",
+      "Water (5 liters)"
+    ],
+    "preparation": "Dilute copper octanoate in clean water and mix well.",
+    "application": "Apply at early spring growth before blooms open, repeating every 10-14 days during wet conditions.",
+    "cause": "Diplocarpon earlianum fungus, spreading through splashing raindrops.",
+    "symptoms": "Small irregular purplish spots on upper leaf surfaces that enlarge and turn dark brown, giving the foliage a burnt or scorched appearance.",
+    "prevention_methods": "Plant on raised beds with straw mulch to prevent soil splashing. Remove old diseased leaves after harvest.",
+    "chemical_pesticides": {
+      "name": "Captan 50 WP or Pyraclostrobin",
+      "dosage": "2g per liter of water",
+      "safety_instructions": "Wear rubber gloves. Do not apply during strawberry bloom to protect honeybees."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Balanced Organic Berry Food (4-3-6)",
+      "quantity": "25g per plant",
+      "application_timing": "Apply post-harvest after renovation."
+    }
+  },
+  "Strawberry___healthy": {
+    "solution_name": "No treatment needed",
+    "ingredients": [],
+    "preparation": "N/A",
+    "application": "Strawberry plants are healthy. Maintain straw mulching and monitor runner growth.",
+    "cause": "Good soil drainage and clean mulch barrier",
+    "symptoms": "Lush trifoliate green leaves, clean white flowers, and firm unblemished strawberries.",
+    "prevention_methods": "Keep berries off bare soil using clean straw mulch. Ensure morning sun exposure.",
+    "chemical_pesticides": {
+      "name": "N/A (Not required)",
+      "dosage": "None",
+      "safety_instructions": "None"
+    },
+    "fertilizer": {
+      "fertilizer_type": "Organic Compost & Fish emulsion",
+      "quantity": "500g compost per plant",
+      "application_timing": "Apply around crown in early spring."
+    }
+  },
+  "Tomato___Bacterial_spot": {
+    "solution_name": "Turmeric-Neem Bio-Bactericide",
+    "ingredients": [
+      "Turmeric powder (2 tbsp)",
+      "Neem oil (2 tbsp)",
+      "Water (1 liter)",
+      "Liquid soap (1 tsp)"
+    ],
+    "preparation": "Mix neem oil with soap to emulsify, dissolve turmeric powder in warm water, combine and shake well.",
+    "application": "Spray leaves thoroughly every 5-7 days; natural curcumin in turmeric inhibits bacterial proliferation.",
+    "cause": "Xanthomonas bacteria, carried on contaminated seed and splashed onto leaves by rain or irrigation.",
+    "symptoms": "Small, dark brown to black water-soaked spots on leaves with yellow halos, and scabby raised spots on green tomatoes.",
+    "prevention_methods": "Use certified pathogen-free seeds, avoid overhead sprinklers, and do not prune tomato plants when wet.",
+    "chemical_pesticides": {
+      "name": "Copper Hydroxide mixed with Mancozeb",
+      "dosage": "2g copper + 2g mancozeb per liter of water",
+      "safety_instructions": "Wear safety goggles and mask. Wash skin thoroughly after handling. Observe 7-day pre-harvest interval."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Calcium nitrate & Potassium sulfate",
+      "quantity": "15g per plant",
+      "application_timing": "Apply at early fruit set stage to strengthen cellular resistance."
+    }
+  },
+  "Tomato___Early_blight": {
+    "solution_name": "Garlic-Chili Extract",
+    "ingredients": [
+      "Garlic cloves (10)",
+      "Green chili (5)",
+      "Water (1 liter)",
+      "Liquid soap (1 tsp)"
+    ],
+    "preparation": "Crush garlic and chili, soak in water for 24 hours, strain through fine cloth, and mix in soap.",
+    "application": "Spray on infected plants every 4-5 days until symptoms subside, prioritizing lower leaves.",
+    "cause": "Alternaria solani fungus, surviving in soil debris and activated by warm, humid conditions.",
+    "symptoms": "Dark brown spots with distinct concentric rings ('target-board' pattern) starting on older lower leaves, causing leaf yellowing and dieback.",
+    "prevention_methods": "Prune off bottom 12 inches of foliage to prevent soil splash. Mulch heavily with clean straw.",
+    "chemical_pesticides": {
+      "name": "Chlorothalonil or Azoxystrobin",
+      "dosage": "2 ml per liter of water",
+      "safety_instructions": "Toxic to fish and bees. Wear protective gloves and eye protection. Do not spray in windy weather."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Nitrogen-rich Compost Tea or Vermicompost",
+      "quantity": "250 ml diluted per plant",
+      "application_timing": "Bi-weekly to support healthy vegetative regrowth."
+    }
+  },
+  "Tomato___Late_blight": {
+    "solution_name": "Baking Soda & Neem Oil Spray",
+    "ingredients": [
+      "Baking soda (1 tbsp)",
+      "Neem oil (1 tsp)",
+      "Liquid soap (1/2 tsp)",
+      "Water (1 liter)"
+    ],
+    "preparation": "Mix baking soda, neem oil, and soap thoroughly into water until fully dissolved and emulsified.",
+    "application": "Spray on both sides of leaves every 5-7 days, ideally in late afternoon/evening to avoid leaf burn.",
+    "cause": "Phytophthora infestans oomycete pathogen, spreading rapidly during cool, wet, humid weather.",
+    "symptoms": "Large, dark water-soaked spots on leaves and stems, turning brown/black with white fuzzy fungal growth underneath in moist air.",
+    "prevention_methods": "Plant resistant cultivars, stake plants for airflow, destroy infected crop residues, and avoid overhead watering.",
+    "chemical_pesticides": {
+      "name": "Mancozeb or Metalaxyl-M fungicide",
+      "dosage": "2.5g per liter of water",
+      "safety_instructions": "Wear full-body protective clothing. Keep away from water bodies. Observe 14-day pre-harvest interval."
+    },
+    "fertilizer": {
+      "fertilizer_type": "High Potassium Organic Fertilizer (Wood ash or Kelp meal)",
+      "quantity": "40g per plant",
+      "application_timing": "Monthly to promote sturdy vascular systems and disease tolerance."
+    }
+  },
+  "Tomato___Leaf_Mold": {
+    "solution_name": "Vinegar-Baking Soda Antifungal Wash",
+    "ingredients": [
+      "Apple cider vinegar (1 tbsp)",
+      "Baking soda (1 tsp)",
+      "Water (2 liters)",
+      "Liquid soap (1/2 tsp)"
+    ],
+    "preparation": "Mix vinegar and baking soda in water slowly, then add soap as surfactant.",
+    "application": "Spray undersides of leaves where mold spores aggregate every 5-7 days.",
+    "cause": "Passalora fulva (Cladosporium fulvum) fungus, flourishing in greenhouse or humid outdoor conditions above 85% RH.",
+    "symptoms": "Pale greenish-yellow spots on upper leaf surfaces matching olive-green to brown velvety mold on leaf undersides.",
+    "prevention_methods": "Improve greenhouse ventilation. Space plants widely to facilitate air movement. Avoid wetting foliage.",
+    "chemical_pesticides": {
+      "name": "Copper Oxychloride or Difenoconazole",
+      "dosage": "2g per liter of water",
+      "safety_instructions": "Wear respirator in enclosed spaces. Do not spray during high temperatures."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Calcium-rich Bone Meal & Potash",
+      "quantity": "30g per plant",
+      "application_timing": "At flowering stage."
+    }
+  },
+  "Tomato___Septoria_leaf_spot": {
+    "solution_name": "Compost Tea Spray",
+    "ingredients": [
+      "Compost (1 kg)",
+      "Water (10 liters)"
+    ],
+    "preparation": "Soak compost in water for 24 hours, then strain thoroughly through a cloth.",
+    "application": "Spray weekly on affected foliage to boost beneficial microbes on leaf surfaces.",
+    "cause": "Septoria lycopersici fungus, favored by warm, wet, and humid conditions.",
+    "symptoms": "Numerous small, circular spots with dark brown margins and tan/gray centers, starting on lower leaves.",
+    "prevention_methods": "Mulch soil around plants, avoid overhead watering, rotate crops every 3 years, and remove lower diseased leaves.",
+    "chemical_pesticides": {
+      "name": "Chlorothalonil or Copper-based fungicides",
+      "dosage": "2-3g per liter of water",
+      "safety_instructions": "Wear protective gloves and mask. Avoid spraying near bees. Do not harvest within 7 days of application."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Calcium-rich Bone Meal & Potassium sulphate",
+      "quantity": "30g per plant",
+      "application_timing": "At flowering stage to support cellular wall strength and disease resistance."
+    }
+  },
+  "Tomato___Spider_mites Two-spotted_spider_mite": {
+    "solution_name": "Rosemary-Neem Insecticidal Soap Spray",
+    "ingredients": [
+      "Neem oil (2 tbsp)",
+      "Liquid Castile soap (1 tbsp)",
+      "Water (1 liter)",
+      "Rosemary oil (5 drops)"
+    ],
+    "preparation": "Emulsify neem oil and rosemary oil with castile soap in warm water.",
+    "application": "Spray vigorously focusing directly on leaf undersides where mites live. Apply every 3-4 days for two weeks.",
+    "cause": "Tetranychus urticae (Two-spotted spider mite), multiplying rapidly during hot, dry, dusty weather.",
+    "symptoms": "Fine yellow stippling or bronzing on leaves, delicate fine webbing between leaf stems, leaf desiccation, and premature drop.",
+    "prevention_methods": "Mist foliage periodically during hot dry spells to disrupt web building. Conserve predatory mites (Phytoseiidae).",
+    "chemical_pesticides": {
+      "name": "Abamectin or Spiromesifen Miticide",
+      "dosage": "0.5 ml per liter of water",
+      "safety_instructions": "Highly toxic to beneficial insects. Apply in early morning before bees are active. 7-day pre-harvest interval."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Seaweed Kelp Extract & Epsom salts",
+      "quantity": "10 ml kelp + 5g Epsom salts per liter",
+      "application_timing": "Foliar spray to help stressed plants recover chlorophyll."
+    }
+  },
+  "Tomato___Target_Spot": {
+    "solution_name": "Bordeaux Mixture & Potassium Bicarbonate",
+    "ingredients": [
+      "Potassium bicarbonate (2 tbsp)",
+      "Neem oil (1 tbsp)",
+      "Water (4 liters)",
+      "Liquid soap (1 tsp)"
+    ],
+    "preparation": "Dissolve bicarbonate in water, emulsify neem oil with soap, and combine.",
+    "application": "Spray foliage every 7 days as soon as circular target-like spots appear on leaves or stems.",
+    "cause": "Corynespora cassiicola fungus, flourishing in warm, humid tropical and sub-tropical environments.",
+    "symptoms": "Pinpoint water-soaked spots that enlarge into circular brown lesions with distinct pale centers and dark concentric rings.",
+    "prevention_methods": "Increase spacing between plants to maximize airflow. Sanitize trellising stakes between seasons.",
+    "chemical_pesticides": {
+      "name": "Pyraclostrobin or Boscalid",
+      "dosage": "1.5g per liter of water",
+      "safety_instructions": "Use protective gloves. Do not contaminate waterways. Pre-harvest interval is 7 days."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Balanced NPK (15-15-15) plus Micronutrients",
+      "quantity": "25g per plant",
+      "application_timing": "Apply around root zone every 3 weeks."
+    }
+  },
+  "Tomato___Tomato_Yellow_Leaf_Curl_Virus": {
+    "solution_name": "Neem Oil & Yellow Sticky Trap Vector Management",
+    "ingredients": [
+      "Neem oil (2 tbsp)",
+      "Liquid soap (1 tsp)",
+      "Water (1 liter)",
+      "Yellow sticky sheets (for whitefly traps)"
+    ],
+    "preparation": "Mix neem oil with soap in water. Place yellow sticky traps around the field perimeter at canopy height.",
+    "application": "Spray neem oil solution every 5 days on leaf undersides to deter whitefly vectors. Note: Virus itself has no cure; focus on vector control.",
+    "cause": "Tomato Yellow Leaf Curl Begomovirus (TYLCV), transmitted exclusively by Silverleaf Whiteflies (Bemisia tabaci).",
+    "symptoms": "Stunted bushy plants, severe upward curling and cupping of leaf margins, yellowing of leaf edges (chlorosis), and flower drop with negligible fruit set.",
+    "prevention_methods": "Use 50-mesh insect netting in greenhouses. Install yellow sticky traps. Immediately uproot and bag infected plants. Plant TYLCV-resistant hybrids.",
+    "chemical_pesticides": {
+      "name": "Spirotetramat or Cyantraniliprole (Whitefly insecticide)",
+      "dosage": "1 ml per liter of water",
+      "safety_instructions": "Wear personal protective equipment. Toxic to bees. Do not apply during peak flowering."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Zinc and Magnesium sulfate foliar spray",
+      "quantity": "5g each per liter of water",
+      "application_timing": "Apply to support uninfected neighbouring plants."
+    }
+  },
+  "Tomato___Tomato_mosaic_virus": {
+    "solution_name": "Skimmed Milk Antiviral Wash",
+    "ingredients": [
+      "Dry skimmed milk powder (100g)",
+      "Water (1 liter)"
+    ],
+    "preparation": "Dissolve milk powder thoroughly in water. Milk proteins help deactivate viral particles on plant surfaces.",
+    "application": "Spray young seedlings and dip hands and pruning tools into milk solution before handling plants. Remove infected plants.",
+    "cause": "Tomato Mosaic Tobamovirus (ToMV), highly contagious and mechanically transmitted via hands, tools, and seeds.",
+    "symptoms": "Mottling of leaves with alternating light green and dark green patches, leaf blistering or 'shoestring' narrowing, and internal brown rings in fruit.",
+    "prevention_methods": "Wash hands with soap before touching plants. Do not smoke or use tobacco near tomato plants. Disinfect pruners with bleach.",
+    "chemical_pesticides": {
+      "name": "N/A (No chemical cures exist for viral infections)",
+      "dosage": "None - disinfect tools with 10% household bleach",
+      "safety_instructions": "Uproot infected plants, bag them, and destroy away from the field. Do not compost."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Humic acid and Compost tea",
+      "quantity": "200 ml per plant",
+      "application_timing": "Apply to enhance systemic vigour in remaining healthy plants."
+    }
+  },
+  "Tomato___healthy": {
+    "solution_name": "No treatment needed",
+    "ingredients": [],
+    "preparation": "N/A",
+    "application": "Plant appears healthy. Continue regular monitoring, balanced watering, and crop hygiene.",
+    "cause": "Optimal growth conditions",
+    "symptoms": "Dark green leaves, robust stems, no lesions or abnormal spot patterns.",
+    "prevention_methods": "Crop rotation, clean equipment, well-draining soil, weed management.",
+    "chemical_pesticides": {
+      "name": "N/A (Not required)",
+      "dosage": "None",
+      "safety_instructions": "None"
+    },
+    "fertilizer": {
+      "fertilizer_type": "Balanced NPK (10-10-10) or Organic Compost",
+      "quantity": "50g per plant",
+      "application_timing": "At vegetative growth stage (every 4 weeks)"
+    }
+  },
+  "_default": {
+    "solution_name": "General Organic Botanical Spray",
+    "ingredients": [
+      "Neem oil (2 tbsp)",
+      "Liquid soap (1 tsp)",
+      "Water (1 liter)"
+    ],
+    "preparation": "Mix neem oil with soap to emulsify, then dilute in water thoroughly.",
+    "application": "Spray weekly on all foliage as a general-purpose organic preventive treatment. Consult a local agricultural expert for disease-specific advice.",
+    "cause": "General agricultural pathogens (fungi, bacteria, or virus)",
+    "symptoms": "Leaf spots, discoloration, wilting, curling, or abnormal structural growth.",
+    "prevention_methods": "Practice clean weeding, crop rotation, and avoid overhead watering.",
+    "chemical_pesticides": {
+      "name": "Broad-spectrum Chlorothalonil or Mancozeb",
+      "dosage": "2g per liter of water",
+      "safety_instructions": "Wear complete protective gear. Do not spray within 7-14 days of harvesting. Keep away from domestic animals."
+    },
+    "fertilizer": {
+      "fertilizer_type": "Balanced NPK (19-19-19) or Organic Humic Acid",
+      "quantity": "30g dissolved in water per crop",
+      "application_timing": "Apply during active growth periods every 20-30 days."
+    }
+  }
+}

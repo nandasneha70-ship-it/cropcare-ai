@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Smart Crop AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <!-- Leaflet CSS & JS (for GPS mapping) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Leaflet Draw CSS & JS (for mapping plots) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
+    <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Sidebar Navigation -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <h2>🌿 Smart Crop AI</h2>
+        </div>
+        <div class="sidebar-user">
+            {% if current_user_fullname %}
+                <img src="/{{ current_user_photo }}" class="sidebar-avatar" alt="User Avatar">
+                <div class="sidebar-user-info">
+                    <span class="user-name">{{ current_user_fullname }}</span>
+                    <span class="user-role">{{ current_user_role | capitalize }}</span>
+                </div>
+            {% else %}
+                <img src="/static/images/default_profile.png" class="sidebar-avatar" alt="Guest Avatar">
+                <div class="sidebar-user-info">
+                    <span class="user-name">Guest User</span>
+                    <a href="/login" class="login-link">Login</a>
+                </div>
+            {% endif %}
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/">🏠 <span data-lang-key="nav-home">Home</span></a></li>
+            <li><a href="/detect">🔍 <span data-lang-key="nav-detect">Detect Disease</span></a></li>
+            {% if current_user_fullname %}
+                {% if current_user_role == 'admin' %}
+                    <li><a href="/admin/dashboard">🛠️ <span data-lang-key="nav-admin">Admin Panel</span></a></li>
+                {% endif %}
+                <li><a href="/dashboard" class="active">📊 <span data-lang-key="nav-dashboard">Dashboard</span></a></li>
+                <li><a href="/history">📋 <span data-lang-key="nav-history">Disease History</span></a></li>
+            {% endif %}
+            <li><a href="/crop_guide">📖 <span data-lang-key="nav-crop-guide">Crop Guide</span></a></li>
+            <li><a href="/schemes">🌾 <span data-lang-key="nav-schemes">Govt Schemes</span></a></li>
+            <li><a href="/ai_assistant">💬 <span data-lang-key="nav-assistant">AI Farming Assistant</span></a></li>
+            <li><a href="/about">ℹ️ <span data-lang-key="nav-about">About</span></a></li>
+            <li><a href="/contact">📞 <span data-lang-key="nav-contact">Contact</span></a></li>
+            {% if current_user_fullname %}
+                <li><a href="/profile">👤 <span data-lang-key="nav-profile">Profile</span></a></li>
+                <li><a href="/logout">🚪 <span data-lang-key="nav-logout">Logout</span></a></li>
+            {% else %}
+                <li><a href="/login">🔑 <span data-lang-key="nav-login">Login / Sign Up</span></a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+
+                <nav class="navbar">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <button class="sidebar-toggle-btn" onclick="toggleSidebar()">☰</button>
+                <h2><a href="/">🌿 Smart Crop AI</a></h2>
+            </div>
+            <ul>
+                <li>
+                    <select id="langSelect" class="lang-selector" onchange="setLanguage(this.value)">
+                        <option value="en">English</option>
+                        <option value="kn">ಕನ್ನಡ</option>
+                        <option value="hi">हिन्दी</option>
+                    </select>
+                </li>
+            </ul>
+        </nav>
+
+<div class="container" style="margin-top: 80px;">
+    <div class="dashboard-header">
+        <div>
+            <h1><span data-lang-key="dash-welcome">Hello</span>, {{ username }}!</h1>
+            <p data-lang-key="dash-subtitle" style="color: var(--text-muted);">Welcome to your Smart Crop Dashboard.</p>
+        </div>
+        <a href="/detect" class="btn btn-primary" data-lang-key="dash-btn-scan">🌱 New Disease Scan</a>
+    </div>
+
+    <!-- Main Stats Section -->
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <span class="label" data-lang-key="stat-scans">Total Scans Performed</span>
+            <span class="value">{{ scan_count }}</span>
+        </div>
+        <div class="stat-card">
+            <span class="label" data-lang-key="stat-status">Account Status</span>
+            <span class="value" style="font-size: 24px; margin-top: 15px; color: #047857;" data-lang-key="stat-active">Active (Farmer)</span>
+        </div>
+        <div class="stat-card" style="border-left-color: var(--accent);">
+            <span class="label" data-lang-key="stat-db">Primary Database</span>
+            <span class="value" style="font-size: 24px; margin-top: 15px;" data-lang-key="stat-db-val">Organic Solution DB</span>
+        </div>
+    </div>
+
+    <!-- Tab Navigation & Sections -->
+    <div class="tab-container">
+        <!-- Sidebar Menu -->
+        <div class="tab-menu">
+            <button class="tab-btn active" onclick="switchTab('overview')"><span data-lang-key="tab-overview">📊 Overview</span></button>
+            <button class="tab-btn" onclick="switchTab('scheduler')"><span data-lang-key="tab-scheduler">📅 Farm Scheduler</span></button>
+            <button class="tab-btn" onclick="switchTab('finance')"><span data-lang-key="tab-finance">💰 Financials</span></button>
+            <button class="tab-btn" onclick="switchTab('soil')"><span data-lang-key="tab-soil">🧪 Soil Health</span></button>
+            <button class="tab-btn" onclick="switchTab('gps_mapping')"><span data-lang-key="tab-gps">🗺️ GPS Mapping</span></button>
+            <button class="tab-btn" onclick="switchTab('market_prices')"><span data-lang-key="tab-market">📈 Market Prices</span></button>
+        </div>
+
+        <!-- Tab Content Panes -->
+        <div class="tab-contents-panel" style="flex-grow: 1;">
+            
+            <!-- OVERVIEW TAB -->
+            <div id="overview" class="tab-content active">
+                <div class="card" id="weatherCard">
+                    <!-- Weather API will write contents dynamically here -->
+                    <h3>⛅ Weather-Based Disease Risk Profile</h3>
+                    <p style="color: var(--text-muted);">Loading weather-based crop risk warnings...</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <h3 style="margin-bottom: 20px;">Recent Activity Logs</h3>
+                        {% if recent_scans %}
+                            <div class="table-responsive">
+                                <table class="custom-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Disease / Crop</th>
+                                            <th>Confidence</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for scan in recent_scans %}
+                                        <tr>
+                                            <td>
+                                                {% if 'healthy' in scan[0].lower() %}
+                                                    <span class="badge badge-healthy" style="background:#d1fae5; color:#065f46; padding: 4px 10px; border-radius:12px; font-size:12px; font-weight:700;">
+                                                        {{ scan[0].replace('___', ' - ').replace('_', ' ') }}
+                                                    </span>
+                                                {% else %}
+                                                    <span class="badge badge-disease" style="background:#fee2e2; color:#991b1b; padding: 4px 10px; border-radius:12px; font-size:12px; font-weight:700;">
+                                                        {{ scan[0].replace('___', ' - ').replace('_', ' ') }}
+                                                    </span>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ "%.1f"|format(scan[1]*100) }}%</td>
+                                            <td>{{ scan[2].split()[0] }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div style="margin-top: 20px; text-align: right;">
+                                <a href="/history" style="color: var(--primary-light); text-decoration: none; font-weight: 600; font-size: 14px;">View Full History &rarr;</a>
+                            </div>
+                        {% else %}
+                            <p style="color: var(--text-muted); text-align: center; padding: 20px 0;">No crop disease scans recorded yet.</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="card" style="background: var(--gradient-card);">
+                        <h3 style="margin-bottom: 15px;">Quick Actions</h3>
+                        <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 20px;">
+                            <a href="/detect" class="btn btn-secondary" style="justify-content: flex-start; gap: 10px;">
+                                <span>📷</span> Use Leaf Camera / Upload Image
+                            </a>
+                            <a href="/schemes" class="btn btn-secondary" style="justify-content: flex-start; gap: 10px;">
+                                <span>🌾</span> Review Government Subsidies & Schemes
+                            </a>
+                            <a href="/about" class="btn btn-secondary" style="justify-content: flex-start; gap: 10px;">
+                                <span>📚</span> Learn About the MobileNetV2 Model
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SCHEDULER & LABOUR TAB -->
+            <div id="scheduler" class="tab-content">
+                <div class="grid-2">
+                    <!-- Add Tasks form -->
+                    <div class="card">
+                        <h3>📅 Schedule Farm Activity</h3>
+                        <form action="/add_task" method="POST" style="margin-top: 15px;">
+                            <div class="form-group">
+                                <label>Task / Irrigation Schedule</label>
+                                <input type="text" name="description" class="form-control" placeholder="e.g. Irrigate Tomato fields, Spray Neem Oil" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Due Date</label>
+                                <input type="date" name="due_date" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">➕ Add Schedule</button>
+                        </form>
+                    </div>
+                    <!-- Tasks list table -->
+                    <div class="card">
+                        <h3>📋 Active Task Lists</h3>
+                        <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Description</th>
+                                        <th>Due Date</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for t in tasks %}
+                                    <tr>
+                                        <td style="{% if t.status == 'completed' %}text-decoration: line-through; color: var(--text-muted);{% endif %}">
+                                            {{ t.description }}
+                                        </td>
+                                        <td>{{ t.due_date }}</td>
+                                        <td>
+                                            <form action="/update_task_status/{{ t.id }}" method="POST" style="display:inline;">
+                                                <select name="status" onchange="this.form.submit()" style="padding: 4px; border-radius: 4px; border: 1px solid var(--border-color); font-size:12px;">
+                                                    <option value="pending" {% if t.status == 'pending' %}selected{% endif %}>Pending</option>
+                                                    <option value="completed" {% if t.status == 'completed' %}selected{% endif %}>Completed</option>
+                                                </select>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <a href="/delete_task/{{ t.id }}" class="btn btn-secondary" style="padding: 4px 8px; font-size:11px; background:#fee2e2; color:#b91c1c;">❌</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Labor Management -->
+                <div class="card" style="margin-top:25px;">
+                    <h3>🧑‍🌾 Farm Labor Management Registry</h3>
+                    <div class="grid-2" style="margin-top:15px;">
+                        <div>
+                            <form action="/add_labor" method="POST">
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input type="text" name="name" class="form-control" placeholder="e.g. Ramesh Gowda" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Assigned Duty / Role</label>
+                                    <input type="text" name="role" class="form-control" placeholder="e.g. Harvester, Pesticide Sprayer" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Daily Wage (INR)</label>
+                                    <input type="number" name="wage" step="0.01" class="form-control" placeholder="e.g. 500" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Contact Phone Number</label>
+                                    <input type="text" name="contact" class="form-control" placeholder="e.g. +91 9876543210" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">➕ Register Laborer</button>
+                            </form>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Role</th>
+                                        <th>Daily Wage</th>
+                                        <th>Contact</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for l in labor %}
+                                    <tr>
+                                        <td><strong>{{ l.name }}</strong></td>
+                                        <td>{{ l.role }}</td>
+                                        <td>₹{{ l.wage }}</td>
+                                        <td>{{ l.contact }}</td>
+                                        <td>
+                                            <a href="/delete_labor/{{ l.id }}" class="btn btn-secondary" style="padding: 4px 8px; font-size:11px; background:#fee2e2; color:#b91c1c;">❌</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FINANCIALS TAB -->
+            <div id="finance" class="tab-content">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>💰 Log Cultivation Cost & Profit Ledger</h3>
+                        <form action="/add_financial" method="POST" style="margin-top:15px;">
+                            <div class="form-group">
+                                <label>Crop / Plot Name</label>
+                                <input type="text" name="crop_name" class="form-control" placeholder="e.g. Tomato (Kharif 2026)" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Labor Expenses (INR)</label>
+                                <input type="number" step="0.01" name="labor_cost" class="form-control" placeholder="0.00">
+                            </div>
+                            <div class="form-group">
+                                <label>Fertilizer Costs (INR)</label>
+                                <input type="number" step="0.01" name="fertilizer_cost" class="form-control" placeholder="0.00">
+                            </div>
+                            <div class="form-group">
+                                <label>Pesticide/Remedy Cost (INR)</label>
+                                <input type="number" step="0.01" name="pesticide_cost" class="form-control" placeholder="0.00">
+                            </div>
+                            <div class="form-group">
+                                <label>Other / Seed / Misc Costs (INR)</label>
+                                <input type="number" step="0.01" name="other_cost" class="form-control" placeholder="0.00">
+                            </div>
+                            <div class="form-group">
+                                <label>Expected Market Revenue (INR)</label>
+                                <input type="number" step="0.01" name="expected_revenue" class="form-control" placeholder="0.00" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">➕ Save Ledger Record</button>
+                        </form>
+                    </div>
+                    
+                    <div style="display:flex; flex-direction:column; gap:20px;">
+                        <div class="dashboard-stats" style="grid-template-columns:1fr 1fr; margin-bottom:0;">
+                            <div class="stat-card" style="border-left-color:#ef4444;">
+                                <span class="label">Total Cultivation Cost</span>
+                                <span class="value" style="font-size:24px;">₹{{ total_cost }}</span>
+                            </div>
+                            <div class="stat-card" style="border-left-color:#10b981;">
+                                <span class="label">Expected Net Profit</span>
+                                <span class="value" style="font-size:24px; color:{% if expected_profit >= 0 %}#047857{% else %}#b91c1c{% endif %};">
+                                    ₹{{ expected_profit }}
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="card" style="flex-grow:1;">
+                            <h3>📊 Financial Ledger</h3>
+                            <div class="table-responsive" style="max-height: 250px; overflow-y: auto;">
+                                <table class="custom-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Crop</th>
+                                            <th>Total Cost</th>
+                                            <th>Revenue</th>
+                                            <th>Net Profit</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for f in financials %}
+                                        <tr>
+                                            <td><strong>{{ f.crop_name }}</strong></td>
+                                            <td>₹{{ f.total_cost }}</td>
+                                            <td>₹{{ f.expected_revenue }}</td>
+                                            <td style="color:{% if f.net_profit >= 0 %}#047857{% else %}#b91c1c{% endif %}; font-weight:700;">
+                                                ₹{{ f.net_profit }}
+                                            </td>
+                                            <td>
+                                                <a href="/delete_financial/{{ f.id }}" class="btn btn-secondary" style="padding: 4px 8px; font-size:11px; background:#fee2e2; color:#b91c1c;">❌</a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SOIL HEALTH TAB -->
+            <div id="soil" class="tab-content">
+                <div class="card">
+                    <h3 data-lang-key="yield-title">🧪 Soil Nutrient & Yield Predictor</h3>
+                    <p style="color:var(--text-muted); margin-bottom:20px;">Input the NPK soil values (obtained from your Soil Health Card) and field size to predict crop yield tonnage and receive fertilization tuning tips.</p>
+                    <div class="grid-2">
+                        <div>
+                            <div class="form-group">
+                                <label>Select Target Crop</label>
+                                <select id="soilCropSelect" class="form-control">
+                                    <option value="Tomato">Tomato</option>
+                                    <option value="Potato">Potato</option>
+                                    <option value="Corn">Corn (Maize)</option>
+                                    <option value="Grape">Grape</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Field Size (Acres)</label>
+                                <input type="number" id="soilAreaInput" class="form-control" value="1.0" step="0.1" min="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label>Nitrogen (N) - mg/kg</label>
+                                <input type="range" id="soilNInput" class="form-control" min="0" max="200" value="80" oninput="document.getElementById('nVal').innerText = this.value">
+                                <div style="text-align:right; font-size:12px; font-weight:700;">Value: <span id="nVal">80</span> mg/kg</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Phosphorus (P) - mg/kg</label>
+                                <input type="range" id="soilPInput" class="form-control" min="0" max="150" value="45" oninput="document.getElementById('pVal').innerText = this.value">
+                                <div style="text-align:right; font-size:12px; font-weight:700;">Value: <span id="pVal">45</span> mg/kg</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Potassium (K) - mg/kg</label>
+                                <input type="range" id="soilKInput" class="form-control" min="0" max="250" value="95" oninput="document.getElementById('kVal').innerText = this.value">
+                                <div style="text-align:right; font-size:12px; font-weight:700;">Value: <span id="kVal">95</span> mg/kg</div>
+                            </div>
+                            <button onclick="predictYield()" class="btn btn-primary" style="width:100%; justify-content:center; margin-top:15px;" data-lang-key="yield-btn">Predict Tonnage Yield</button>
+                        </div>
+                        <div>
+                            <div id="yieldResultBox" style="min-height:200px; display:flex; align-items:center; justify-content:center; border:2px dashed var(--border-color); border-radius:10px; padding:20px; text-align:center;">
+                                <p style="color:var(--text-muted);">Adjust inputs and press 'Predict Tonnage Yield' to execute AI yield modeling.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GPS MAPPING TAB -->
+            <div id="gps_mapping" class="tab-content">
+                <div class="card">
+                    <h3>🗺️ GPS-Based Farm Mapping & Area Profiler</h3>
+                    <p style="color:var(--text-muted); margin-bottom:15px;">Use the polygon drawing tool to map out the borders of your agricultural plots on the interactive map. The system will automatically calculate the acreage.</p>
+                    <div id="farmMap" class="map-container"></div>
+                    
+                    <div class="grid-2" style="margin-top:20px;">
+                        <div>
+                            <form action="/add_plot" method="POST">
+                                <div class="form-group">
+                                    <label>Plot Name / Label</label>
+                                    <input type="text" name="name" class="form-control" placeholder="e.g. Northern Potato Field" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Calculated Area (Acres)</label>
+                                    <input type="text" id="plotAreaInput" name="area" class="form-control" readonly required>
+                                </div>
+                                <!-- Hidden field for coordinates JSON -->
+                                <input type="hidden" id="plotCoordsInput" name="coordinates" required>
+                                
+                                <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">💾 Save Plot boundary</button>
+                            </form>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Plot Name</th>
+                                        <th>Area (Acres)</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for p in plots %}
+                                    <tr>
+                                        <td><strong>{{ p.name }}</strong></td>
+                                        <td>{{ p.area }} Acres</td>
+                                        <td>
+                                            <a href="/delete_plot/{{ p.id }}" class="btn btn-secondary" style="padding: 4px 8px; font-size:11px; background:#fee2e2; color:#b91c1c;">❌</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MARKET PRICES TAB -->
+            <div id="market_prices" class="tab-content">
+                <div class="card">
+                    <h3 data-lang-key="price-title">📈 Crop Market Price Forecasting (INR / Quintal)</h3>
+                    <p style="color:var(--text-muted); margin-bottom:20px;">Review real-time crop commodity market prices and predictive forecasts for agricultural planning.</p>
+                    <div class="grid-3">
+                        <!-- Potato -->
+                        <div class="stat-card" style="border-left-color:#3b82f6;">
+                            <span class="label">Potato (APMC)</span>
+                            <span class="value" style="font-size:24px;">₹1,850</span>
+                            <p style="font-size:11.5px; color:#047857; margin-top:10px; font-weight:700;">📈 Forecast: ₹2,100 (Next Month)</p>
+                            <p style="font-size:10px; color:var(--text-muted);">High domestic demand and lower arrivals expected.</p>
+                        </div>
+                        <!-- Tomato -->
+                        <div class="stat-card" style="border-left-color:#10b981;">
+                            <span class="label">Tomato (APMC)</span>
+                            <span class="value" style="font-size:24px;">₹2,400</span>
+                            <p style="font-size:11.5px; color:#b91c1c; margin-top:10px; font-weight:700;">📉 Forecast: ₹1,900 (Next Month)</p>
+                            <p style="font-size:10px; color:var(--text-muted);">New harvest supplies arriving from neighbouring states.</p>
+                        </div>
+                        <!-- Corn -->
+                        <div class="stat-card" style="border-left-color:#eab308;">
+                            <span class="label">Maize / Corn (MSP)</span>
+                            <span class="value" style="font-size:24px;">₹2,225</span>
+                            <p style="font-size:11.5px; color:#b25e00; margin-top:10px; font-weight:700;">➡️ Forecast: ₹2,250 (Next Month)</p>
+                            <p style="font-size:10px; color:var(--text-muted);">Stabilized by minimum support price policy levels.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- FLOATING CHATBOT WIDGET -->
+<div class="chat-widget">
+    <button class="chat-btn" onclick="toggleChat()">💬</button>
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <h4 id="chatTitle" data-lang-key="chat-title">🌿 AI Farmer Assistant</h4>
+            <button class="close-chat" onclick="toggleChat()">&times;</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages will be added dynamically -->
+        </div>
+        <div class="chat-input-area">
+            <button class="chat-voice-btn" onclick="startVoiceInput()" title="Voice Input">🎙️</button>
+            <input type="text" id="chatInput" class="chat-input" placeholder="Ask a farming question..." data-lang-key="chat-placeholder">
+            <button class="chat-send-btn" onclick="sendChat()" title="Send">➡️</button>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 Smart Crop AI. Faithful implementation of the ICCSAI 2025 methodology.</p>
+</footer>
+    </div>
+</div>
+
+<!-- Load script.js containing translation, weather, map, yield & chat widgets -->
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+<!-- Restore tab state if URL contains hash -->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const hash = window.location.hash;
+        if (hash) {
+            const tabId = hash.replace("#", "");
+            // Find appropriate tab ID
+            const validTabs = ["overview", "scheduler", "finance", "soil", "gps_mapping", "market_prices"];
+            if (validTabs.includes(tabId)) {
+                switchTab(tabId);
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

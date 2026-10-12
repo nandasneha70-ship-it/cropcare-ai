@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Smart Crop AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .badge-admin {
+            background-color: #e0f2fe;
+            color: #0369a1;
+        }
+        .badge-user {
+            background-color: #f3f4f6;
+            color: #374151;
+        }
+        .btn-xs {
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        .btn-danger {
+            background-color: #dc2626;
+            color: white;
+        }
+        .btn-danger:hover {
+            background-color: #b91c1c;
+        }
+        .btn-toggle {
+            background-color: #0284c7;
+            color: white;
+        }
+        .btn-toggle:hover {
+            background-color: #0369a1;
+        }
+        .actions-cell {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .actions-cell form {
+            margin: 0;
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Sidebar Navigation -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <h2>🌿 Smart Crop AI</h2>
+        </div>
+        <div class="sidebar-user">
+            {% if current_user_fullname %}
+                <img src="/{{ current_user_photo }}" class="sidebar-avatar" alt="User Avatar">
+                <div class="sidebar-user-info">
+                    <span class="user-name">{{ current_user_fullname }}</span>
+                    <span class="user-role">{{ current_user_role | capitalize }}</span>
+                </div>
+            {% else %}
+                <img src="/static/images/default_profile.png" class="sidebar-avatar" alt="Guest Avatar">
+                <div class="sidebar-user-info">
+                    <span class="user-name">Guest User</span>
+                    <a href="/login" class="login-link">Login</a>
+                </div>
+            {% endif %}
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/">🏠 <span data-lang-key="nav-home">Home</span></a></li>
+            <li><a href="/detect">🔍 <span data-lang-key="nav-detect">Detect Disease</span></a></li>
+            {% if current_user_fullname %}
+                {% if current_user_role == 'admin' %}
+                    <li><a href="/admin/dashboard" class="active">🛠️ <span data-lang-key="nav-admin">Admin Panel</span></a></li>
+                {% endif %}
+                <li><a href="/dashboard">📊 <span data-lang-key="nav-dashboard">Dashboard</span></a></li>
+                <li><a href="/history">📋 <span data-lang-key="nav-history">Disease History</span></a></li>
+            {% endif %}
+            <li><a href="/crop_guide">📖 <span data-lang-key="nav-crop-guide">Crop Guide</span></a></li>
+            <li><a href="/schemes">🌾 <span data-lang-key="nav-schemes">Govt Schemes</span></a></li>
+            <li><a href="/ai_assistant">💬 <span data-lang-key="nav-assistant">AI Farming Assistant</span></a></li>
+            <li><a href="/about">ℹ️ <span data-lang-key="nav-about">About</span></a></li>
+            <li><a href="/contact">📞 <span data-lang-key="nav-contact">Contact</span></a></li>
+            {% if current_user_fullname %}
+                <li><a href="/profile">👤 <span data-lang-key="nav-profile">Profile</span></a></li>
+                <li><a href="/logout">🚪 <span data-lang-key="nav-logout">Logout</span></a></li>
+            {% else %}
+                <li><a href="/login">🔑 <span data-lang-key="nav-login">Login / Sign Up</span></a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+
+                <nav class="navbar">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <button class="sidebar-toggle-btn" onclick="toggleSidebar()">☰</button>
+                <h2><a href="/">🌿 Smart Crop AI</a></h2>
+            </div>
+            <ul>
+                <li>
+                    <select id="langSelect" class="lang-selector" onchange="setLanguage(this.value)">
+                        <option value="en">English</option>
+                        <option value="kn">ಕನ್ನಡ</option>
+                        <option value="hi">हिन्दी</option>
+                    </select>
+                </li>
+            </ul>
+        </nav>
+
+<div class="container" style="margin-top: 80px;">
+    <div class="dashboard-header">
+        <div>
+            <h1>Admin Command Center</h1>
+            <p style="color: var(--text-muted);">Manage system users, view database statistics, and inspect scan history.</p>
+        </div>
+        <div style="background-color: var(--primary); color: white; padding: 10px 20px; border-radius: var(--radius-sm); font-weight: 600; font-size: 14px;">
+            👤 Admin: {{ username }}
+        </div>
+    </div>
+
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <span class="label">Total Registered Users</span>
+            <span class="value">{{ user_count }}</span>
+        </div>
+        <div class="stat-card" style="border-left-color: #0284c7;">
+            <span class="label">System Administrators</span>
+            <span class="value">{{ admin_count }}</span>
+        </div>
+        <div class="stat-card" style="border-left-color: var(--accent);">
+            <span class="label">Total Crop Scans</span>
+            <span class="value">{{ total_scans }}</span>
+        </div>
+        <div class="stat-card" style="border-left-color: #8b5cf6;">
+            <span class="label">Support Inquiries</span>
+            <span class="value">{{ inquiry_count }}</span>
+        </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 30px;">
+        <h3 style="margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+            <span>👥</span> Registered User Directory
+        </h3>
+        <div class="history-table-container">
+            <table class="history-table" style="margin-top: 0;">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Full Name</th>
+                        <th>Email Address</th>
+                        <th>Role</th>
+                        <th style="text-align: center;">Scans</th>
+                        <th style="text-align: right; width: 300px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for u in users %}
+                    <tr>
+                        <td>{{ u.id }}</td>
+                        <td style="font-weight: 600; color: var(--primary);">{{ u.fullname }}</td>
+                        <td>{{ u.email }}</td>
+                        <td>
+                            {% if u.role == 'admin' %}
+                                <span class="badge badge-admin">Admin</span>
+                            {% else %}
+                                <span class="badge badge-user">User</span>
+                            {% endif %}
+                        </td>
+                        <td style="text-align: center; font-weight: 700;">{{ u.scan_count }}</td>
+                        <td style="text-align: right;">
+                            <div class="actions-cell" style="justify-content: flex-end;">
+                                <a href="/admin/user/{{ u.email }}/history" class="btn btn-secondary btn-xs" style="text-decoration: none;">🔍 View Scans</a>
+                                
+                                {% if u.email != session.get('user_email') %}
+                                    <form action="/admin/user/{{ u.id }}/toggle_role" method="POST">
+                                        <button type="submit" class="btn btn-toggle btn-xs">🔄 Toggle Role</button>
+                                    </form>
+                                    <form action="/admin/user/{{ u.id }}/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete user {{ u.fullname }}? This will permanently delete their account and all scan history.');">
+                                        <button type="submit" class="btn btn-danger btn-xs">❌ Delete</button>
+                                    </form>
+                                {% else %}
+                                    <span style="font-size: 11px; color: var(--text-muted); font-style: italic; padding: 6px 12px;">Current Account</span>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Farmer Inquiries & Support Messages Card -->
+    <div class="card" style="margin-bottom: 30px;">
+        <h3 style="margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+            <span>✉️</span> Farmer Support & Inquiry Messages
+        </h3>
+        {% if inquiries %}
+            <div class="history-table-container">
+                <table class="history-table" style="margin-top: 0;">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Sender Name</th>
+                            <th>Email</th>
+                            <th>Subject</th>
+                            <th>Message</th>
+                            <th>Date & Time</th>
+                            <th style="text-align: right; width: 100px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for inq in inquiries %}
+                        <tr>
+                            <td>{{ inq.id }}</td>
+                            <td style="font-weight: 600; color: var(--primary);">{{ inq.name }}</td>
+                            <td><a href="mailto:{{ inq.email }}" style="color: var(--primary); text-decoration: underline;">{{ inq.email }}</a></td>
+                            <td style="font-weight: 500;">{{ inq.subject }}</td>
+                            <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="{{ inq.message }}">{{ inq.message }}</td>
+                            <td style="color: var(--text-muted); font-size: 13px;">{{ inq.timestamp }}</td>
+                            <td style="text-align: right;">
+                                <form action="/admin/inquiry/{{ inq.id }}/delete" method="POST" onsubmit="return confirm('Delete this inquiry message?');">
+                                    <button type="submit" class="btn btn-danger btn-xs">❌ Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p style="color: var(--text-muted); text-align: center; padding: 20px 0;">No support inquiries received yet.</p>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <h3 style="margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+            <span>📋</span> Global Recent Scan History (Latest 10)
+        </h3>
+        {% if recent_scans %}
+            <div class="history-table-container">
+                <table class="history-table" style="margin-top: 0;">
+                    <thead>
+                        <tr>
+                            <th>User Email</th>
+                            <th>Disease / Crop Class</th>
+                            <th>Confidence</th>
+                            <th>Date & Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for scan in recent_scans %}
+                        <tr>
+                            <td style="font-weight: 500; color: var(--text-main);">{{ scan.user_email }}</td>
+                            <td>
+                                {% if 'healthy' in scan.disease_name.lower() %}
+                                    <span class="badge badge-healthy">{{ scan.disease_name.replace('___', ' - ').replace('_', ' ') }}</span>
+                                {% else %}
+                                    <span class="badge badge-disease">{{ scan.disease_name.replace('___', ' - ').replace('_', ' ') }}</span>
+                                {% endif %}
+                            </td>
+                            <td style="font-weight: 600;">{{ "%.1f"|format(scan.confidence * 100) }}%</td>
+                            <td style="color: var(--text-muted);">{{ scan.timestamp }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p style="color: var(--text-muted); text-align: center; padding: 20px 0;">No crop disease scans recorded in the system.</p>
+        {% endif %}
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 Smart Crop AI. System Administrator Workspace.</p>
+</footer>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>

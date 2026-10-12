@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan History - Smart Crop AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Sidebar Navigation -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <h2>🌿 Smart Crop AI</h2>
+        </div>
+        <div class="sidebar-user">
+            {% if current_user_fullname %}
+                <img src="/{{ current_user_photo }}" class="sidebar-avatar" alt="User Avatar">
+                <div class="sidebar-user-info">
+                    <span class="user-name">{{ current_user_fullname }}</span>
+                    <span class="user-role">{{ current_user_role | capitalize }}</span>
+                </div>
+            {% else %}
+                <img src="/static/images/default_profile.png" class="sidebar-avatar" alt="Guest Avatar">
+                <div class="sidebar-user-info">
+                    <span class="user-name">Guest User</span>
+                    <a href="/login" class="login-link">Login</a>
+                </div>
+            {% endif %}
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/">🏠 <span data-lang-key="nav-home">Home</span></a></li>
+            <li><a href="/detect">🔍 <span data-lang-key="nav-detect">Detect Disease</span></a></li>
+            {% if current_user_fullname %}
+                {% if current_user_role == 'admin' %}
+                    <li><a href="/admin/dashboard">🛠️ <span data-lang-key="nav-admin">Admin Panel</span></a></li>
+                {% endif %}
+                <li><a href="/dashboard">📊 <span data-lang-key="nav-dashboard">Dashboard</span></a></li>
+                <li><a href="/history" class="active">📋 <span data-lang-key="nav-history">Disease History</span></a></li>
+            {% endif %}
+            <li><a href="/crop_guide">📖 <span data-lang-key="nav-crop-guide">Crop Guide</span></a></li>
+            <li><a href="/schemes">🌾 <span data-lang-key="nav-schemes">Govt Schemes</span></a></li>
+            <li><a href="/ai_assistant">💬 <span data-lang-key="nav-assistant">AI Farming Assistant</span></a></li>
+            <li><a href="/about">ℹ️ <span data-lang-key="nav-about">About</span></a></li>
+            <li><a href="/contact">📞 <span data-lang-key="nav-contact">Contact</span></a></li>
+            {% if current_user_fullname %}
+                <li><a href="/profile">👤 <span data-lang-key="nav-profile">Profile</span></a></li>
+                <li><a href="/logout">🚪 <span data-lang-key="nav-logout">Logout</span></a></li>
+            {% else %}
+                <li><a href="/login">🔑 <span data-lang-key="nav-login">Login / Sign Up</span></a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+
+                <nav class="navbar">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <button class="sidebar-toggle-btn" onclick="toggleSidebar()">☰</button>
+                <h2><a href="/">🌿 Smart Crop AI</a></h2>
+            </div>
+            <ul>
+                <li>
+                    <select id="langSelect" class="lang-selector" onchange="setLanguage(this.value)">
+                        <option value="en">English</option>
+                        <option value="kn">ಕನ್ನಡ</option>
+                        <option value="hi">हिन्दी</option>
+                    </select>
+                </li>
+            </ul>
+        </nav>
+
+
+<div class="container" style="margin-top: 80px;">
+    <div class="card">
+        <h1 style="margin-bottom: 10px;">📋 Your Prediction History</h1>
+        <p style="color: var(--text-muted); margin-bottom: 30px;">
+            A historical list of all plant disease checks you have executed.
+        </p>
+
+        {% if history %}
+            <div class="history-table-container">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Crop Leaf Image</th>
+                            <th>Diagnosed Crop / Pathology</th>
+                            <th>Confidence</th>
+                            <th>Recommended Remedy</th>
+                            <th>Scan Date & Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in history %}
+                        <tr>
+                            <td>
+                                <img src="/{{ row.image_path }}" class="history-thumbnail" alt="Crop Leaf Thumbnail">
+                            </td>
+                            <td>
+                                {% set d_name = row.disease_name or 'Unknown' %}
+                                {% if 'healthy' in d_name.lower() %}
+                                    <span class="badge badge-healthy">
+                                        {{ d_name.replace('___', ' - ').replace('_', ' ') }}
+                                    </span>
+                                {% else %}
+                                    <span class="badge badge-disease">
+                                        {{ d_name.replace('___', ' - ').replace('_', ' ') }}
+                                    </span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <strong>{{ "%.1f"|format(row.confidence*100) }}%</strong>
+                            </td>
+                            <td>
+                                <span style="font-weight: 500; color: var(--primary);">
+                                    {{ row.solution_name }}
+                                </span>
+                            </td>
+                            <td>
+                                <span style="color: var(--text-muted); font-size: 13px;">
+                                    {{ row.timestamp }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div style="text-align: center; padding: 50px 20px;">
+                <span style="font-size: 64px; display: block; margin-bottom: 20px;">📭</span>
+                <h3>No Detections Found</h3>
+                <p style="color: var(--text-muted); margin-top: 8px; margin-bottom: 30px;">
+                    It seems you have not executed any leaf scans yet. Upload a crop photo to begin tracking history.
+                </p>
+                <a href="/detect" class="btn btn-primary">🌱 Analyze First Leaf</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 Smart Crop AI. Faithful implementation of the ICCSAI 2025 methodology.</p>
+</footer>
+    </div>
+</div>
+
+<!-- FLOATING CHATBOT WIDGET -->
+<div class="chat-widget">
+    <button class="chat-btn" onclick="toggleChat()">💬</button>
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <h4 id="chatTitle" data-lang-key="chat-title">🌿 AI Farmer Assistant</h4>
+            <button class="close-chat" onclick="toggleChat()">&times;</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages will be added dynamically -->
+        </div>
+        <div class="chat-input-area">
+            <button class="chat-voice-btn" onclick="startVoiceInput()" title="Voice Input">🎙️</button>
+            <input type="text" id="chatInput" class="chat-input" placeholder="Ask a farming question..." data-lang-key="chat-placeholder">
+            <button class="chat-send-btn" onclick="sendChat()" title="Send">➡️</button>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>

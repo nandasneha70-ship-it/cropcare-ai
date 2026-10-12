@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Schemes - Smart Crop AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Sidebar Navigation -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <h2>🌿 Smart Crop AI</h2>
+        </div>
+        <div class="sidebar-user">
+            {% if current_user_fullname %}
+                <img src="/{{ current_user_photo }}" class="sidebar-avatar" alt="User Avatar">
+                <div class="sidebar-user-info">
+                    <span class="user-name">{{ current_user_fullname }}</span>
+                    <span class="user-role">{{ current_user_role | capitalize }}</span>
+                </div>
+            {% else %}
+                <img src="/static/images/default_profile.png" class="sidebar-avatar" alt="Guest Avatar">
+                <div class="sidebar-user-info">
+                    <span class="user-name">Guest User</span>
+                    <a href="/login" class="login-link">Login</a>
+                </div>
+            {% endif %}
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/">🏠 <span data-lang-key="nav-home">Home</span></a></li>
+            <li><a href="/detect">🔍 <span data-lang-key="nav-detect">Detect Disease</span></a></li>
+            {% if current_user_fullname %}
+                {% if current_user_role == 'admin' %}
+                    <li><a href="/admin/dashboard">🛠️ <span data-lang-key="nav-admin">Admin Panel</span></a></li>
+                {% endif %}
+                <li><a href="/dashboard">📊 <span data-lang-key="nav-dashboard">Dashboard</span></a></li>
+                <li><a href="/history">📋 <span data-lang-key="nav-history">Disease History</span></a></li>
+            {% endif %}
+            <li><a href="/crop_guide">📖 <span data-lang-key="nav-crop-guide">Crop Guide</span></a></li>
+            <li><a href="/schemes" class="active">🌾 <span data-lang-key="nav-schemes">Govt Schemes</span></a></li>
+            <li><a href="/ai_assistant">💬 <span data-lang-key="nav-assistant">AI Farming Assistant</span></a></li>
+            <li><a href="/about">ℹ️ <span data-lang-key="nav-about">About</span></a></li>
+            <li><a href="/contact">📞 <span data-lang-key="nav-contact">Contact</span></a></li>
+            {% if current_user_fullname %}
+                <li><a href="/profile">👤 <span data-lang-key="nav-profile">Profile</span></a></li>
+                <li><a href="/logout">🚪 <span data-lang-key="nav-logout">Logout</span></a></li>
+            {% else %}
+                <li><a href="/login">🔑 <span data-lang-key="nav-login">Login / Sign Up</span></a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+
+                <nav class="navbar">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <button class="sidebar-toggle-btn" onclick="toggleSidebar()">☰</button>
+                <h2><a href="/">🌿 Smart Crop AI</a></h2>
+            </div>
+            <ul>
+                <li>
+                    <select id="langSelect" class="lang-selector" onchange="setLanguage(this.value)">
+                        <option value="en">English</option>
+                        <option value="kn">ಕನ್ನಡ</option>
+                        <option value="hi">हिन्दी</option>
+                    </select>
+                </li>
+            </ul>
+        </nav>
+
+
+<div class="container" style="margin-top: 80px;">
+    <div class="card" style="margin-bottom: 40px;">
+        <h1 style="margin-bottom: 10px;">🌾 Government Agriculture Schemes</h1>
+        <p style="color: var(--text-muted); max-width: 800px;">
+            Explore welfare programs, crop insurances, and chemical-free cultivation subsidies sponsored by the Government to assist farmers.
+        </p>
+    </div>
+
+    <div class="grid-2">
+        <!-- Scheme 1 -->
+        <div class="scheme-card">
+            <span class="scheme-tag">Organic Farming Support</span>
+            <h3>Paramparagat Krishi Vikas Yojana (PKVY)</h3>
+            <p>
+                Promotes organic farming through a cluster approach and Participatory Guarantee System (PGS) certification. Farmers receive financial support of Rs. 50,000 per hectare over 3 years, with 62% of the amount allocated for organic inputs like bio-fertilizers and botanical pest controls.
+            </p>
+            <a href="https://pgsindia-ncof.dacnet.nic.in/" target="_blank" class="scheme-link">
+                Visit Official Site &rarr;
+            </a>
+        </div>
+
+        <!-- Scheme 2 -->
+        <div class="scheme-card">
+            <span class="scheme-tag">Direct Income Support</span>
+            <h3>PM Kisan Samman Nidhi (PM-KISAN)</h3>
+            <p>
+                An initiative by the Government of India that guarantees direct income support of Rs. 6,000 per year in three equal installments to all landholding farmer families across the country to cover agricultural inputs and domestic needs.
+            </p>
+            <a href="https://pmkisan.gov.in/" target="_blank" class="scheme-link">
+                Visit Official Site &rarr;
+            </a>
+        </div>
+
+        <!-- Scheme 3 -->
+        <div class="scheme-card">
+            <span class="scheme-tag">Crop Insurance</span>
+            <h3>PM Fasal Bima Yojana (PMFBY)</h3>
+            <p>
+                An act-of-nature crop insurance program covering yield losses due to non-preventable risks such as droughts, floods, pest attacks, and diseases. Farmers pay a minimal premium of just 2% for Kharif crops and 1.5% for Rabi crops.
+            </p>
+            <a href="https://pmfby.gov.in/" target="_blank" class="scheme-link">
+                Visit Official Site &rarr;
+            </a>
+        </div>
+
+        <!-- Scheme 4 -->
+        <div class="scheme-card">
+            <span class="scheme-tag">Soil Management</span>
+            <h3>Soil Health Card Scheme</h3>
+            <p>
+                Assists state governments in issuing soil health cards to all farmers. The card provides details on the nutrient status of the soil, enabling farmers to optimize fertilizer application, improve soil health, and choose the most suitable crops.
+            </p>
+            <a href="https://soilhealth.dac.gov.in/" target="_blank" class="scheme-link">
+                Visit Official Site &rarr;
+            </a>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 Smart Crop AI. Faithful implementation of the ICCSAI 2025 methodology.</p>
+</footer>
+    </div>
+</div>
+
+<!-- FLOATING CHATBOT WIDGET -->
+<div class="chat-widget">
+    <button class="chat-btn" onclick="toggleChat()">💬</button>
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <h4 id="chatTitle" data-lang-key="chat-title">🌿 AI Farmer Assistant</h4>
+            <button class="close-chat" onclick="toggleChat()">&times;</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages will be added dynamically -->
+        </div>
+        <div class="chat-input-area">
+            <button class="chat-voice-btn" onclick="startVoiceInput()" title="Voice Input">🎙️</button>
+            <input type="text" id="chatInput" class="chat-input" placeholder="Ask a farming question..." data-lang-key="chat-placeholder">
+            <button class="chat-send-btn" onclick="sendChat()" title="Send">➡️</button>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+
+</body>
+</html>

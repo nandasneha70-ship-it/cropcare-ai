@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Crop AI - Plant Disease Detection & Organic Remedies</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Sidebar Navigation -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <h2>🌿 Smart Crop AI</h2>
+        </div>
+        <div class="sidebar-user">
+            {% if current_user_fullname %}
+                <img src="/{{ current_user_photo }}" class="sidebar-avatar" alt="User Avatar">
+                <div class="sidebar-user-info">
+                    <span class="user-name">{{ current_user_fullname }}</span>
+                    <span class="user-role">{{ current_user_role | capitalize }}</span>
+                </div>
+            {% else %}
+                <img src="/static/images/default_profile.png" class="sidebar-avatar" alt="Guest Avatar">
+                <div class="sidebar-user-info">
+                    <span class="user-name">Guest User</span>
+                    <a href="/login" class="login-link">Login</a>
+                </div>
+            {% endif %}
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/" class="active">🏠 <span data-lang-key="nav-home">Home</span></a></li>
+            <li><a href="/detect">🔍 <span data-lang-key="nav-detect">Detect Disease</span></a></li>
+            {% if current_user_fullname %}
+                {% if current_user_role == 'admin' %}
+                    <li><a href="/admin/dashboard">🛠️ <span data-lang-key="nav-admin">Admin Panel</span></a></li>
+                {% endif %}
+                <li><a href="/dashboard">📊 <span data-lang-key="nav-dashboard">Dashboard</span></a></li>
+                <li><a href="/history">📋 <span data-lang-key="nav-history">Disease History</span></a></li>
+            {% endif %}
+            <li><a href="/crop_guide">📖 <span data-lang-key="nav-crop-guide">Crop Guide</span></a></li>
+            <li><a href="/schemes">🌾 <span data-lang-key="nav-schemes">Govt Schemes</span></a></li>
+            <li><a href="/ai_assistant">💬 <span data-lang-key="nav-assistant">AI Farming Assistant</span></a></li>
+            <li><a href="/about">ℹ️ <span data-lang-key="nav-about">About</span></a></li>
+            <li><a href="/contact">📞 <span data-lang-key="nav-contact">Contact</span></a></li>
+            {% if current_user_fullname %}
+                <li><a href="/profile">👤 <span data-lang-key="nav-profile">Profile</span></a></li>
+                <li><a href="/logout">🚪 <span data-lang-key="nav-logout">Logout</span></a></li>
+            {% else %}
+                <li><a href="/login">🔑 <span data-lang-key="nav-login">Login / Sign Up</span></a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+                        <nav class="navbar">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <button class="sidebar-toggle-btn" onclick="toggleSidebar()">☰</button>
+                <h2><a href="/">🌿 Smart Crop AI</a></h2>
+            </div>
+            <ul>
+                <li>
+                    <select id="langSelect" class="lang-selector" onchange="setLanguage(this.value)">
+                        <option value="en">English</option>
+                        <option value="kn">ಕನ್ನಡ</option>
+                        <option value="hi">हिन्दी</option>
+                    </select>
+                </li>
+            </ul>
+        </nav>
+
+
+        <section class="hero">
+    <h1>AI-Powered Smart Crop<br>Disease Detection</h1>
+    <p>
+        Protect your crops instantly using advanced artificial intelligence. Upload a leaf image, detect pathogens, and receive verified organic solutions for sustainable agriculture.
+    </p>
+    <a href="/detect">
+        <button>🌱 Analyze Your Crop Now</button>
+    </a>
+</section>
+
+<div class="container">
+    <section class="features">
+        <div class="grid-3">
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Instant AI Diagnosis</h3>
+                <p>Powered by fine-tuned MobileNetV2 deep learning architectures trained on standard agricultural datasets.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🍃</div>
+                <h3>100% Organic Remedies</h3>
+                <p>Get chemical-free traditional remedies (like neem oil, cow urine, turmeric) to cure plant diseases sustainably.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌾</div>
+                <h3>Farmer Resources</h3>
+                <p>Explore current government agriculture schemes and subsidies designed to support local farming operations.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="card" style="margin-top: 50px; background: var(--gradient-card);">
+        <div class="grid-2" style="align-items: center;">
+            <div>
+                <h2 style="margin-bottom: 15px;">How It Works</h2>
+                <p style="color: var(--text-muted); margin-bottom: 15px;">
+                    Our system bridges the gap between state-of-the-art computer vision technology and traditional sustainable agriculture practices. 
+                </p>
+                <ol style="margin-left: 20px; color: var(--text-muted); display: flex; flex-direction: column; gap: 10px;">
+                    <li><strong>Upload Leaf Photo:</strong> Snap or upload a photo of the affected plant leaf.</li>
+                    <li><strong>AI Analysis:</strong> Our model analyzes the visible symptoms and patches.</li>
+                    <li><strong>Organic Remedy:</strong> Instantly view the diagnosed disease and detailed organic preparation/application steps.</li>
+                </ol>
+            </div>
+            <div style="text-align: center;">
+                <span style="font-size: 120px;">📱</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <footer>
+            <p>&copy; 2026 Smart Crop AI. Faithful implementation of the ICCSAI 2025 methodology.</p>
+            <p>For sustainable agriculture & natural organic remedies.</p>
+        </footer>
+    </div>
+</div>
+
+<!-- FLOATING CHATBOT WIDGET -->
+<div class="chat-widget">
+    <button class="chat-btn" onclick="toggleChat()">💬</button>
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <h4 id="chatTitle" data-lang-key="chat-title">🌿 AI Farmer Assistant</h4>
+            <button class="close-chat" onclick="toggleChat()">&times;</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages will be added dynamically -->
+        </div>
+        <div class="chat-input-area">
+            <button class="chat-voice-btn" onclick="startVoiceInput()" title="Voice Input">🎙️</button>
+            <input type="text" id="chatInput" class="chat-input" placeholder="Ask a farming question..." data-lang-key="chat-placeholder">
+            <button class="chat-send-btn" onclick="sendChat()" title="Send">➡️</button>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>

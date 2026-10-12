@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Farming Assistant - Smart Crop AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Sidebar Navigation -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <h2>🌿 Smart Crop AI</h2>
+        </div>
+        <div class="sidebar-user">
+            {% if current_user_fullname %}
+                <img src="/{{ current_user_photo }}" class="sidebar-avatar" alt="User Avatar">
+                <div class="sidebar-user-info">
+                    <span class="user-name">{{ current_user_fullname }}</span>
+                    <span class="user-role">{{ current_user_role | capitalize }}</span>
+                </div>
+            {% else %}
+                <img src="/static/images/default_profile.png" class="sidebar-avatar" alt="Guest Avatar">
+                <div class="sidebar-user-info">
+                    <span class="user-name">Guest User</span>
+                    <a href="/login" class="login-link">Login</a>
+                </div>
+            {% endif %}
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/">🏠 <span data-lang-key="nav-home">Home</span></a></li>
+            <li><a href="/detect">🔍 <span data-lang-key="nav-detect">Detect Disease</span></a></li>
+            {% if current_user_fullname %}
+                {% if current_user_role == 'admin' %}
+                    <li><a href="/admin/dashboard">🛠️ <span data-lang-key="nav-admin">Admin Panel</span></a></li>
+                {% endif %}
+                <li><a href="/dashboard">📊 <span data-lang-key="nav-dashboard">Dashboard</span></a></li>
+                <li><a href="/history">📋 <span data-lang-key="nav-history">Disease History</span></a></li>
+            {% endif %}
+            <li><a href="/crop_guide">📖 <span data-lang-key="nav-crop-guide">Crop Guide</span></a></li>
+            <li><a href="/schemes">🌾 <span data-lang-key="nav-schemes">Govt Schemes</span></a></li>
+            <li><a href="/ai_assistant" class="active">💬 <span data-lang-key="nav-assistant">AI Farming Assistant</span></a></li>
+            <li><a href="/about">ℹ️ <span data-lang-key="nav-about">About</span></a></li>
+            <li><a href="/contact">📞 <span data-lang-key="nav-contact">Contact</span></a></li>
+            {% if current_user_fullname %}
+                <li><a href="/profile">👤 <span data-lang-key="nav-profile">Profile</span></a></li>
+                <li><a href="/logout">🚪 <span data-lang-key="nav-logout">Logout</span></a></li>
+            {% else %}
+                <li><a href="/login">🔑 <span data-lang-key="nav-login">Login / Sign Up</span></a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+                        <nav class="navbar">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <button class="sidebar-toggle-btn" onclick="toggleSidebar()">☰</button>
+                <h2><a href="/">🌿 Smart Crop AI</a></h2>
+            </div>
+            <ul>
+                <li>
+                    <select id="langSelect" class="lang-selector" onchange="setLanguage(this.value)">
+                        <option value="en">English</option>
+                        <option value="kn">ಕನ್ನಡ</option>
+                        <option value="hi">हिन्दी</option>
+                    </select>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="container" style="margin-top: 40px;">
+            <div class="crop-guide-header" style="margin-bottom: 25px;">
+                <h1 data-lang-key="assistant-title">💬 AI Farming Assistant</h1>
+                <p data-lang-key="assistant-subtitle" style="color: var(--text-muted); margin-top: 8px;">Ask any farming or disease related question below.</p>
+            </div>
+
+            <!-- Console Layout -->
+            <div class="assistant-layout">
+                <!-- Suggested Questions Panel -->
+                <div class="assistant-sidebar">
+                    <h3 style="font-size: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 10px;" id="quickQuestionsHeading" data-lang-key="quick-questions-title">💡 Quick Questions</h3>
+                    <div id="quickQuestionsList">
+                        <div class="suggested-card" onclick="askConsoleSuggested('Why are my crop leaves turning yellow?')">
+                            ❓ Why are my crop leaves turning yellow?
+                        </div>
+                        <div class="suggested-card" onclick="askConsoleSuggested('How can I prevent fungal diseases?')">
+                            🛡️ How can I prevent fungal diseases?
+                        </div>
+                        <div class="suggested-card" onclick="askConsoleSuggested('What are the symptoms of tomato blight?')">
+                            🍅 What are the symptoms of tomato blight?
+                        </div>
+                        <div class="suggested-card" onclick="askConsoleSuggested('How often should I water my crop?')">
+                            💧 How often should I water my crop?
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Console Window -->
+                <div class="chat-console">
+                    <div class="chat-console-header">
+                        <h4 style="color: var(--text-white); font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                            🌿 Smart Farm Advisor Console
+                        </h4>
+                        <div style="font-size: 12px; color: #a7f3d0; font-weight: 700; text-transform: uppercase;">
+                            ● Online
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="activeScanValue" value="{% if active_scan %}{{ active_scan.disease_name }} {{ active_scan.confidence }}{% else %}Tomato - Late blight 43%{% endif %}">
+                    <script>
+                        window.activeScan = "{% if active_scan %}{{ active_scan.disease_name }} {{ active_scan.confidence }}{% else %}Tomato - Late blight 43%{% endif %}";
+                    </script>
+
+                    {% if active_scan %}
+                    <div id="activeScanBanner" style="background: #ecfdf5; border-bottom: 1px solid #a7f3d0; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; font-size: 13px;">
+                        <div>
+                            <strong style="color: #065f46;">🌱 <span id="activeScanLabel">Active Scan:</span></strong>
+                            <span style="color: #047857; font-weight: 600;" id="activeScanDisease">{{ active_scan.disease_name }}</span>
+                            <span style="background: #10b981; color: white; padding: 2px 7px; border-radius: 10px; font-size: 11px; margin-left: 6px;" id="activeScanConfidence">{{ active_scan.confidence }}</span>
+                        </div>
+                        <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 11.5px; border-radius: 6px;" onclick="askScanQuestion()" id="btnAskScan">🍀 Ask About Disease</button>
+                    </div>
+                    {% endif %}
+
+                    <div class="chat-console-messages" id="consoleChatMessages">
+                        <div class="chat-msg bot" id="consoleWelcomeMsg">
+                            Hello! I am your friendly AI Farming Assistant. 🌱 I am here to help you understand crop diseases, organic remedies, watering, and soil health. Feel free to use the quick questions or type your question below!
+                        </div>
+                    </div>
+                    <div class="chat-console-input-area">
+                        <button class="chat-voice-btn" onclick="startConsoleVoiceInput()" title="Voice Input" style="font-size: 20px;">🎙️</button>
+                        <input type="text" id="consoleChatInput" class="chat-input" placeholder="Ask a farming question..." data-lang-key="assistant-input-placeholder" style="padding: 12px 18px; border-radius: 25px;">
+                        <button class="chat-send-btn" onclick="sendConsoleChat()" title="Send" style="font-size: 20px;">➡️</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 Smart Crop AI. For sustainable agriculture & natural organic remedies.</p>
+        </footer>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script>
+    // Console Voice Input Wrapper
+    function startConsoleVoiceInput() {
+        if ('webkitSpeechRecognition' in window) {
+            const recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            
+            const languageMap = {
+                en: "en-IN",
+                kn: "kn-IN",
+                hi: "hi-IN"
+            };
+            const selectedLang = (typeof getCurrentSelectedLanguage === 'function')
+                ? getCurrentSelectedLanguage()
+                : (currentLanguage || 'en');
+            recognition.lang = languageMap[selectedLang] || 'en-IN';
+            
+            const chatInput = document.getElementById('consoleChatInput');
+            if (!chatInput) return;
+            
+            chatInput.placeholder = "Listening...";
+            recognition.start();
+            
+            recognition.onresult = function(event) {
+                const voiceText = event.results[0][0].transcript;
+                chatInput.value = voiceText;
+                chatInput.placeholder = "Ask a farming question...";
+                sendConsoleChat(); // Auto-send message
+            };
+            
+            recognition.onerror = function() {
+                chatInput.placeholder = "Ask a farming question...";
+            };
+        } else {
+            alert("Speech recognition is not supported in this browser.");
+        }
+    }
+</script>
+</body>
+</html>

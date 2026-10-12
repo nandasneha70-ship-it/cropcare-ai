@@ -1,0 +1,44 @@
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+
+# Python cache and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Virtual environments
+venv/
+venv311/
+ENV/
+env/
+
+# IDE / Editor folders
+.vscode/
+.idea/
+
+# Database files
+*.db
+*.sqlite3
+
+# Uploads and temporary data
+static/uploads/*
+!static/uploads/.gitkeep
+cloudflared.exe
+test_images/
+plant_disease_project_backup/
+templates_backup/
+scratch/
+*.pptx
+
+models/backup_38class/
+
+# Heavy training datasets (keep runtime data/translations and data/solutions)
+data/raw/
+data/train/
+data/val/
+data/val_extra_classes/
+

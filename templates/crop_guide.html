@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Guide - Smart Crop AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Sidebar Navigation -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <h2>🌿 Smart Crop AI</h2>
+        </div>
+        <div class="sidebar-user">
+            {% if current_user_fullname %}
+                <img src="/{{ current_user_photo }}" class="sidebar-avatar" alt="User Avatar">
+                <div class="sidebar-user-info">
+                    <span class="user-name">{{ current_user_fullname }}</span>
+                    <span class="user-role">{{ current_user_role | capitalize }}</span>
+                </div>
+            {% else %}
+                <img src="/static/images/default_profile.png" class="sidebar-avatar" alt="Guest Avatar">
+                <div class="sidebar-user-info">
+                    <span class="user-name">Guest User</span>
+                    <a href="/login" class="login-link">Login</a>
+                </div>
+            {% endif %}
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/">🏠 <span data-lang-key="nav-home">Home</span></a></li>
+            <li><a href="/detect">🔍 <span data-lang-key="nav-detect">Detect Disease</span></a></li>
+            {% if current_user_fullname %}
+                {% if current_user_role == 'admin' %}
+                    <li><a href="/admin/dashboard">🛠️ <span data-lang-key="nav-admin">Admin Panel</span></a></li>
+                {% endif %}
+                <li><a href="/dashboard">📊 <span data-lang-key="nav-dashboard">Dashboard</span></a></li>
+                <li><a href="/history">📋 <span data-lang-key="nav-history">Disease History</span></a></li>
+            {% endif %}
+            <li><a href="/crop_guide" class="active">📖 <span data-lang-key="nav-crop-guide">Crop Guide</span></a></li>
+            <li><a href="/schemes">🌾 <span data-lang-key="nav-schemes">Govt Schemes</span></a></li>
+            <li><a href="/ai_assistant">💬 <span data-lang-key="nav-assistant">AI Farming Assistant</span></a></li>
+            <li><a href="/about">ℹ️ <span data-lang-key="nav-about">About</span></a></li>
+            <li><a href="/contact">📞 <span data-lang-key="nav-contact">Contact</span></a></li>
+            {% if current_user_fullname %}
+                <li><a href="/profile">👤 <span data-lang-key="nav-profile">Profile</span></a></li>
+                <li><a href="/logout">🚪 <span data-lang-key="nav-logout">Logout</span></a></li>
+            {% else %}
+                <li><a href="/login">🔑 <span data-lang-key="nav-login">Login / Sign Up</span></a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+                        <nav class="navbar">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <button class="sidebar-toggle-btn" onclick="toggleSidebar()">☰</button>
+                <h2><a href="/">🌿 Smart Crop AI</a></h2>
+            </div>
+            <ul>
+                <li>
+                    <select id="langSelect" class="lang-selector" onchange="setLanguage(this.value)">
+                        <option value="en">English</option>
+                        <option value="kn">ಕನ್ನಡ</option>
+                        <option value="hi">हिन्दी</option>
+                    </select>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="container" style="margin-top: 40px;">
+            <div class="crop-guide-header">
+                <h1 data-lang-key="crop-guide-title">📖 Comprehensive Crop Guide</h1>
+                <p style="color: var(--text-muted); margin-top: 8px;">Explore optimal growing conditions, common diseases, and preventive advice for essential crops.</p>
+            </div>
+
+            <!-- Search and Filter Bar -->
+            <div class="crop-search-filter">
+                <input type="text" id="cropSearchInput" onkeyup="searchCrops()" class="search-bar" placeholder="Search crops or diseases..." data-lang-key="crop-search-placeholder" style="margin-bottom: 15px;">
+                <div class="crop-filter-row">
+                    <button class="crop-filter-btn active" onclick="filterCrops('all', event)" data-lang-key="crop-filter-all">All Crops</button>
+                    <button class="crop-filter-btn" onclick="filterCrops('vegetable', event)" data-lang-key="crop-filter-vegetables">Vegetables</button>
+                    <button class="crop-filter-btn" onclick="filterCrops('fruit', event)" data-lang-key="crop-filter-fruits">Fruits</button>
+                    <button class="crop-filter-btn" onclick="filterCrops('grain', event)" data-lang-key="crop-filter-grains">Grains</button>
+                    <button class="crop-filter-btn" onclick="filterCrops('cash', event)" data-lang-key="crop-filter-cash">Cash Crops</button>
+                </div>
+            </div>
+
+            <!-- Crop Cards Grid -->
+            <div class="grid-3" id="cropGrid">
+                <!-- Tomato -->
+                <div class="crop-card crop-card-item" data-crop-type="vegetable" data-crop-name="Tomato">
+                    <div class="crop-image-wrapper">
+                        <span style="font-size: 80px; display: block; text-align: center; line-height: 180px;">🍅</span>
+                        <span class="crop-badge">Vegetable</span>
+                    </div>
+                    <div class="crop-body">
+                        <h3 class="crop-title">Tomato</h3>
+                        <p class="crop-desc">Warm-season vegetable rich in Vitamin C and Lycopene, highly popular in local and global culinary markets.</p>
+                        <div class="crop-meta">
+                            <div class="crop-meta-item">
+                                <strong>Suitable Growing Conditions:</strong>
+                                <span>Sandy loam soil, pH 6.0-7.0, 21°C - 24°C, moderate sun</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Water Requirements:</strong>
+                                <span>1 - 1.5 inches per week. Irrigate at base.</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Common Diseases:</strong>
+                                <span>Early Blight, Late Blight, Septoria Leaf Spot, Spider Mites</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Basic Prevention Tips:</strong>
+                                <span>Use organic mulch to prevent soil spores splashing. Prune lower foliage.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Potato -->
+                <div class="crop-card crop-card-item" data-crop-type="vegetable" data-crop-name="Potato">
+                    <div class="crop-image-wrapper">
+                        <span style="font-size: 80px; display: block; text-align: center; line-height: 180px;">🥔</span>
+                        <span class="crop-badge">Vegetable</span>
+                    </div>
+                    <div class="crop-body">
+                        <h3 class="crop-title">Potato</h3>
+                        <p class="crop-desc">Underground starch-rich tuber crop, serving as a primary staple source of dietary energy globally.</p>
+                        <div class="crop-meta">
+                            <div class="crop-meta-item">
+                                <strong>Suitable Growing Conditions:</strong>
+                                <span>Loose well-drained acidic soil, pH 5.2-6.5, Cool 15°C - 20°C</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Water Requirements:</strong>
+                                <span>Consistent moisture. 1 - 2 inches/week. Reduce before harvest.</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Common Diseases:</strong>
+                                <span>Late Blight, Early Blight, Common Scab, Black Scurf</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Basic Prevention Tips:</strong>
+                                <span>Plant certified disease-free seed tubers. Rotate fields every 3 years.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rice -->
+                <div class="crop-card crop-card-item" data-crop-type="grain" data-crop-name="Rice">
+                    <div class="crop-image-wrapper">
+                        <span style="font-size: 80px; display: block; text-align: center; line-height: 180px;">🌾</span>
+                        <span class="crop-badge">Grain</span>
+                    </div>
+                    <div class="crop-body">
+                        <h3 class="crop-title">Rice (Paddy)</h3>
+                        <p class="crop-desc">Major cereal grass grain crop, widely cultivated in waterlogged fields across tropical regions.</p>
+                        <div class="crop-meta">
+                            <div class="crop-meta-item">
+                                <strong>Suitable Growing Conditions:</strong>
+                                <span>Clayey alluvial soils, pH 5.5-6.5, Warm humid 22°C - 32°C</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Water Requirements:</strong>
+                                <span>High. Flooded conditions (5 - 10 cm depth) during growth.</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Common Diseases:</strong>
+                                <span>Rice Blast, Bacterial Leaf Blight, Sheath Blight</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Basic Prevention Tips:</strong>
+                                <span>Avoid excessive Nitrogen fertilizer. Plow or burn crop residues post-harvest.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wheat -->
+                <div class="crop-card crop-card-item" data-crop-type="grain" data-crop-name="Wheat">
+                    <div class="crop-image-wrapper">
+                        <span style="font-size: 80px; display: block; text-align: center; line-height: 180px;">🌾</span>
+                        <span class="crop-badge">Grain</span>
+                    </div>
+                    <div class="crop-body">
+                        <h3 class="crop-title">Wheat</h3>
+                        <p class="crop-desc">Major winter cereal food grain crop, critical for bread-making and primary nutrition in cool climates.</p>
+                        <div class="crop-meta">
+                            <div class="crop-meta-item">
+                                <strong>Suitable Growing Conditions:</strong>
+                                <span>Well-drained fertile clay loams, pH 6.0-7.5, Cool 10°C - 22°C</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Water Requirements:</strong>
+                                <span>Moderate. Requires 4 - 6 timely irrigations at critical growth stages.</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Common Diseases:</strong>
+                                <span>Leaf Rust, Yellow Rust, Black Stem Rust, Loose Smut</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Basic Prevention Tips:</strong>
+                                <span>Sow rust-resistant varieties. Treat seeds with biological protectants.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Maize -->
+                <div class="crop-card crop-card-item" data-crop-type="grain" data-crop-name="Maize">
+                    <div class="crop-image-wrapper">
+                        <span style="font-size: 80px; display: block; text-align: center; line-height: 180px;">🌽</span>
+                        <span class="crop-badge">Grain</span>
+                    </div>
+                    <div class="crop-body">
+                        <h3 class="crop-title">Maize (Corn)</h3>
+                        <p class="crop-desc">Coarse grain feed and cereal crop, offering high adaptability across varying agro-climatic zones.</p>
+                        <div class="crop-meta">
+                            <div class="crop-meta-item">
+                                <strong>Suitable Growing Conditions:</strong>
+                                <span>Rich loamy soil, pH 5.8-7.5, Warm sunny 21°C - 27°C</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Water Requirements:</strong>
+                                <span>Moderate (500-800 mm). High sensitivity to waterlogging.</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Common Diseases:</strong>
+                                <span>Common Rust, Northern Leaf Blight, Turcicum Leaf Blight</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Basic Prevention Tips:</strong>
+                                <span>Adopt deep summer plowing. Maintain clean fields with regular weeding.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cotton -->
+                <div class="crop-card crop-card-item" data-crop-type="cash" data-crop-name="Cotton">
+                    <div class="crop-image-wrapper">
+                        <span style="font-size: 80px; display: block; text-align: center; line-height: 180px;">☁️</span>
+                        <span class="crop-badge">Cash Crop</span>
+                    </div>
+                    <div class="crop-body">
+                        <h3 class="crop-title">Cotton</h3>
+                        <p class="crop-desc">Major commercial fiber cash crop, grown extensively in heavy black soils (regur soil) of central regions.</p>
+                        <div class="crop-meta">
+                            <div class="crop-meta-item">
+                                <strong>Suitable Growing Conditions:</strong>
+                                <span>Deep black clay soil, pH 6.0-8.0, Hot dry 21°C - 30°C</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Water Requirements:</strong>
+                                <span>Moderate. Irrigation required primarily during flowering and boll opening.</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Common Diseases:</strong>
+                                <span>Boll Rot, Fusarium Wilt, Bacterial Leaf Blight</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Basic Prevention Tips:</strong>
+                                <span>Prune dense lower branches. Utilize crop rotation and pest-resistant Bt seeds.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Apple -->
+                <div class="crop-card crop-card-item" data-crop-type="fruit" data-crop-name="Apple">
+                    <div class="crop-image-wrapper">
+                        <span style="font-size: 80px; display: block; text-align: center; line-height: 180px;">🍎</span>
+                        <span class="crop-badge">Fruit</span>
+                    </div>
+                    <div class="crop-body">
+                        <h3 class="crop-title">Apple</h3>
+                        <p class="crop-desc">Premium temperate orchard fruit crop, requiring winter chilling hours to induce quality fruit set.</p>
+                        <div class="crop-meta">
+                            <div class="crop-meta-item">
+                                <strong>Suitable Growing Conditions:</strong>
+                                <span>Well-drained loamy hillsides, pH 6.0-6.8, Cold winters</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Water Requirements:</strong>
+                                <span>Consistent moderate soil moisture. Regular watering during fruit growth.</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Common Diseases:</strong>
+                                <span>Apple Scab, Black Rot, Cedar Apple Rust, Fire Blight</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Basic Prevention Tips:</strong>
+                                <span>Prune branches yearly for airflow. Clear fallen orchard foliage.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grape -->
+                <div class="crop-card crop-card-item" data-crop-type="fruit" data-crop-name="Grape">
+                    <div class="crop-image-wrapper">
+                        <span style="font-size: 80px; display: block; text-align: center; line-height: 180px;">🍇</span>
+                        <span class="crop-badge">Fruit</span>
+                    </div>
+                    <div class="crop-body">
+                        <h3 class="crop-title">Grape</h3>
+                        <p class="crop-desc">Vignicultural fruit crop cultivated on trellises, used for table consumption, raisins, and wine production.</p>
+                        <div class="crop-meta">
+                            <div class="crop-meta-item">
+                                <strong>Suitable Growing Conditions:</strong>
+                                <span>Gravelly sandy loam, pH 6.5-7.5, Warm dry climate</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Water Requirements:</strong>
+                                <span>Low-Moderate. Drip irrigation is highly recommended to avoid leaf mold.</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Common Diseases:</strong>
+                                <span>Downy Mildew, Powdery Mildew, Black Rot, Esca</span>
+                            </div>
+                            <div class="crop-meta-item">
+                                <strong>Basic Prevention Tips:</strong>
+                                <span>Train vines for structural spacing. Spray organic copper solutions preventatively.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 Smart Crop AI. For sustainable agriculture & natural organic remedies.</p>
+        </footer>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<style>
+.crop-filter-btn {
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    font-size: 13.5px;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-weight: 500;
+    transition: var(--transition);
+}
+.crop-filter-btn:hover, .crop-filter-btn.active {
+    background: var(--primary-light);
+    color: white;
+    border-color: var(--primary-light);
+}
+</style>
+</body>
+</html>

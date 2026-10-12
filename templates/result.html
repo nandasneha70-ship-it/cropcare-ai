@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang or 'en' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="current-lang" content="{{ current_lang or 'en' }}">
+    <title>Analysis Result - Smart Crop AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Sidebar Navigation -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <h2>🌿 Smart Crop AI</h2>
+        </div>
+        <div class="sidebar-user">
+            {% if current_user_fullname %}
+                <img src="/{{ current_user_photo }}" class="sidebar-avatar" alt="User Avatar">
+                <div class="sidebar-user-info">
+                    <span class="user-name">{{ current_user_fullname }}</span>
+                    <span class="user-role">{{ current_user_role | capitalize }}</span>
+                </div>
+            {% else %}
+                <img src="/static/images/default_profile.png" class="sidebar-avatar" alt="Guest Avatar">
+                <div class="sidebar-user-info">
+                    <span class="user-name">Guest User</span>
+                    <a href="/login" class="login-link">Login</a>
+                </div>
+            {% endif %}
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/">🏠 <span data-lang-key="nav-home">Home</span></a></li>
+            <li><a href="/detect" class="active">🔍 <span data-lang-key="nav-detect">Detect Disease</span></a></li>
+            {% if current_user_fullname %}
+                {% if current_user_role == 'admin' %}
+                    <li><a href="/admin/dashboard">🛠️ <span data-lang-key="nav-admin">Admin Panel</span></a></li>
+                {% endif %}
+                <li><a href="/dashboard">📊 <span data-lang-key="nav-dashboard">Dashboard</span></a></li>
+                <li><a href="/history">📋 <span data-lang-key="nav-history">Disease History</span></a></li>
+            {% endif %}
+            <li><a href="/crop_guide">📖 <span data-lang-key="nav-crop-guide">Crop Guide</span></a></li>
+            <li><a href="/schemes">🌾 <span data-lang-key="nav-schemes">Govt Schemes</span></a></li>
+            <li><a href="/ai_assistant">💬 <span data-lang-key="nav-assistant">AI Farming Assistant</span></a></li>
+            <li><a href="/about">ℹ️ <span data-lang-key="nav-about">About</span></a></li>
+            <li><a href="/contact">📞 <span data-lang-key="nav-contact">Contact</span></a></li>
+            {% if current_user_fullname %}
+                <li><a href="/profile">👤 <span data-lang-key="nav-profile">Profile</span></a></li>
+                <li><a href="/logout">🚪 <span data-lang-key="nav-logout">Logout</span></a></li>
+            {% else %}
+                <li><a href="/login">🔑 <span data-lang-key="nav-login">Login / Sign Up</span></a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+
+                <nav class="navbar">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <button class="sidebar-toggle-btn" onclick="toggleSidebar()">☰</button>
+                <h2><a href="/">🌿 Smart Crop AI</a></h2>
+            </div>
+            <ul>
+                <li>
+                    <select id="langSelect" class="lang-selector" onchange="setLanguage(this.value)">
+                        <option value="en">English</option>
+                        <option value="kn">ಕನ್ನಡ</option>
+                        <option value="hi">हिन्दी</option>
+                    </select>
+                </li>
+            </ul>
+        </nav>
+
+<div class="container" style="margin-top: 80px;">
+    <div class="card">
+        <div class="result-header">
+            <h1 id="reportHeading">{{ result.labels.report_heading or '🌿 Crop Analysis Reports' }}</h1>
+            <p id="reportSubtitle" style="color: var(--text-muted);">{{ result.labels.report_subtitle or 'AI classification output, dynamic severity rating, and crop advisory guidelines.' }}</p>
+        </div>
+
+        <div class="result-layout">
+            <!-- Left Side: Image and Diagnosis Info -->
+            <div class="result-image-panel">
+                <img src="{{ image_url }}" alt="Analyzed Leaf Image">
+                
+                <div class="diagnosis-card" style="width: 100%; margin-top: 20px;">
+                    <span class="diagnosis-title" id="diagTitle">{{ result.labels.classification_output or 'Classification Output' }}</span>
+                    {% set is_healthy = result.is_healthy %}
+                    <h2 class="diagnosis-value {% if is_healthy %}healthy{% endif %}" id="diseaseLabel">
+                        {{ result.display_label }}
+                    </h2>
+                    
+                    <div style="margin: 12px 0;">
+                        <!-- Severity Badge -->
+                        <span id="severityBadge" class="severity-badge {% if is_healthy %}mild{% elif result.severity == 'Mild' %}mild{% elif result.severity == 'Moderate' %}moderate{% else %}severe{% endif %}">
+                            {{ result.severity_display }}
+                        </span>
+                    </div>
+                    
+                    <div class="confidence-bar-container">
+                        <div id="confBar" class="confidence-bar" style="width: 0%;"></div>
+                    </div>
+                    <div class="confidence-value">
+                        <span id="confLabel">{{ result.labels.confidence or 'Confidence' }}:</span>
+                        <span id="confValue">{{ "%.1f"|format(result.confidence*100) }}%</span>
+                    </div>
+
+                    <!-- Low Confidence Advisory Alert Box -->
+                    <div id="lowConfAlert" style="margin-top: 15px; background: #fffbeb; border: 1px solid #fef3c7; color: #92400e; padding: 12px; border-radius: 8px; font-size: 13px; text-align: left; {% if not result.is_low_confidence %}display: none;{% endif %}">
+                        {{ result.low_confidence_warning }}
+                    </div>
+                    
+                    <div class="tts-container" id="ttsContainer" style="margin-top: 20px; text-align: center;">
+                        <button class="speak-btn" onclick="speakText('diagnosisContent')" id="btnSpeak" data-lang-key="btn-speak" aria-label="{{ result.labels.listen or 'Listen to diagnosis' }}">{{ result.labels.listen or '🔊 Listen' }}</button>
+                        <div class="tts-controls" id="ttsControls" style="display: none;" role="group" aria-label="Speech playback controls">
+                            <button type="button" class="speak-btn tts-ctrl-btn" id="btnPauseResume" onclick="togglePauseResumeSpeech()" aria-label="Pause speech" title="Pause">
+                                <span class="tts-icon" id="pauseResumeIcon">⏸</span>
+                                <span class="tts-text" id="pauseResumeText">Pause</span>
+                            </button>
+                            <button type="button" class="speak-btn tts-ctrl-btn tts-stop-btn" id="btnStopSpeak" onclick="stopSpeech()" aria-label="Stop speech" title="Stop">
+                                <span class="tts-icon">⏹</span>
+                                <span class="tts-text" id="stopSpeakText">Stop</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Organic, Chemical & Soil Solutions -->
+            <div id="diagnosisContent">
+                <h2 class="solution-title" id="diagSummaryTitle">{{ result.labels.comprehensive_diagnosis or '📋 Comprehensive Crop Diagnosis' }}</h2>
+                
+                {% set sol = result.solution %}
+                <div class="solution-details">
+                    <!-- Pathogen Details -->
+                    <div class="solution-section" style="border-left-color: #3b82f6;">
+                        <h4 id="pathologyHeading">{{ result.labels.pathology_heading or 'Disease Pathology & Cause' }}</h4>
+                        <p style="color: var(--text-main); font-size: 14.5px;">
+                            <strong id="causeLabel">{{ result.labels.possible_cause or 'Possible Cause' }}:</strong> <span id="causeVal">{{ sol.cause }}</span>
+                        </p>
+                        <p style="color: var(--text-main); font-size: 14.5px; margin-top: 5px;">
+                            <strong id="symptomsLabel">{{ result.labels.observable_symptoms or 'Observable Symptoms' }}:</strong> <span id="symptomsVal">{{ sol.symptoms }}</span>
+                        </p>
+                    </div>
+
+                    <!-- Organic Solutions -->
+                    <div class="solution-section">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <h4 id="organicHeading">{{ result.labels.organic_remedy_heading or '🍀 Recommended Organic Remedy' }}</h4>
+                        </div>
+                        <p id="organicSolutionName" style="font-size: 17px; font-weight: 700; color: var(--primary); margin-top: 5px;">
+                            {{ sol.solution_name }}
+                        </p>
+                        <div id="ingredientsBlock" style="margin-top: 10px; {% if not sol.ingredients %}display: none;{% endif %}">
+                            <strong id="ingredientsLabel">{{ result.labels.ingredients or 'Ingredients' }}:</strong>
+                            <ul id="ingredientsList" class="ingredients-list">
+                                {% for ingredient in sol.ingredients %}
+                                    <li class="ingredient-tag">{{ ingredient }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <p style="color: var(--text-main); font-size: 14.5px; margin-top: 10px;">
+                            <strong id="prepLabel">{{ result.labels.preparation or 'Preparation' }}:</strong> <span id="prepVal">{{ sol.preparation }}</span>
+                        </p>
+                        <p style="color: var(--text-main); font-size: 14.5px; margin-top: 5px;">
+                            <strong id="appLabel">{{ result.labels.application or 'Application' }}:</strong> <span id="appVal">{{ sol.application }}</span>
+                        </p>
+                    </div>
+
+                    <!-- Chemical Remedies -->
+                    {% set has_chem = sol.chemical_pesticides and sol.chemical_pesticides.name and sol.chemical_pesticides.name != 'N/A' and sol.chemical_pesticides.name != 'None' %}
+                    <div id="chemicalSection" class="solution-section" style="border-left-color: #ef4444; {% if not has_chem %}display:none;{% endif %}">
+                        <h4 id="chemHeading">{{ result.labels.chemical_heading or '⚠️ Chemical Treatment Alternative' }}</h4>
+                        <p style="color: var(--text-main); font-size: 14.5px; font-weight: 700; color: #b91c1c;">
+                            <span id="chemProdLabel">{{ result.labels.product_name or 'Product Name' }}:</span> <span id="chemProdVal">{{ sol.chemical_pesticides.name if sol.chemical_pesticides else '' }}</span>
+                        </p>
+                        <p style="color: var(--text-main); font-size: 14.5px; margin-top: 5px;">
+                            <strong id="chemDosageLabel">{{ result.labels.recommended_dosage or 'Recommended Dosage' }}:</strong> <span id="chemDosageVal">{{ sol.chemical_pesticides.dosage if sol.chemical_pesticides else '' }}</span>
+                        </p>
+                        <p style="color: var(--text-main); font-size: 13.5px; margin-top: 5px; background: #fff5f5; padding: 10px; border-radius: 6px; border: 1px solid #fed7d7;">
+                            <strong id="chemSafetyLabel">{{ result.labels.safety_instructions or 'Safety Instructions' }}:</strong> <span id="chemSafetyVal">{{ sol.chemical_pesticides.safety_instructions if sol.chemical_pesticides else '' }}</span>
+                        </p>
+                    </div>
+
+                    <!-- Fertilizer & Nutrition Guide -->
+                    {% set has_fert = sol.fertilizer and sol.fertilizer.fertilizer_type and sol.fertilizer.fertilizer_type != 'N/A' %}
+                    <div id="fertilizerSection" class="solution-section" style="border-left-color: #eab308; {% if not has_fert %}display:none;{% endif %}">
+                        <h4 id="fertHeading">{{ result.labels.fertilizer_heading or '🧪 Soil Nutrient & Fertilization Advice' }}</h4>
+                        <p style="color: var(--text-main); font-size: 14.5px;">
+                            <strong id="fertRecLabel">{{ result.labels.fertilizer_rec or 'Fertilizer Recommendation' }}:</strong> <span id="fertTypeVal">{{ sol.fertilizer.fertilizer_type if sol.fertilizer else '' }}</span>
+                        </p>
+                        <p style="color: var(--text-main); font-size: 14.5px; margin-top: 5px;">
+                            <strong id="fertQtyLabel">{{ result.labels.quantity or 'Quantity' }}:</strong> <span id="fertQtyVal">{{ sol.fertilizer.quantity if sol.fertilizer else '' }}</span>
+                        </p>
+                        <p style="color: var(--text-main); font-size: 14.5px; margin-top: 5px;">
+                            <strong id="fertTimeLabel">{{ result.labels.application_schedule or 'Application Schedule' }}:</strong> <span id="fertTimeVal">{{ sol.fertilizer.application_timing if sol.fertilizer else '' }}</span>
+                        </p>
+                    </div>
+
+                    <!-- Preventive Methods -->
+                    <div class="solution-section" style="border-left-color: #10b981;">
+                        <h4 id="prevHeading">{{ result.labels.prevention_heading or '🛡️ Prevention & Field Hygiene Methods' }}</h4>
+                        <p id="prevVal" style="color: var(--text-main); font-size: 14.5px;">
+                            {{ sol.prevention_methods }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 50px; text-align: center; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <a href="/detect" class="btn btn-primary" id="btnScanAnother" onclick="stopSpeech()">{{ result.labels.scan_another or '🌱 Scan Another Crop' }}</a>
+            <button onclick="generatePDFReport()" class="btn btn-accent" id="btnPdfReport">{{ result.labels.download_pdf or '📄 Download PDF Report' }}</button>
+            {% if session.get('user') %}
+                <a href="/dashboard" class="btn btn-secondary" id="btnDashboardLink">{{ result.labels.dashboard_btn or '📊 Dashboard' }}</a>
+            {% else %}
+                <a href="/login" class="btn btn-secondary" id="btnLoginSaveHistory" data-lang-key="btn-login-history">{{ result.labels.login_save or '🔐 Login to Save History' }}</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Embedded Multilingual Bundle for Instant Language Switching -->
+<script id="multilingualData" type="application/json">
+    {{ multilingual_bundle | tojson | safe }}
+</script>
+
+<!-- FLOATING CHATBOT WIDGET -->
+<div class="chat-widget">
+    <button class="chat-btn" onclick="toggleChat()">💬</button>
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <h4 id="chatTitle" data-lang-key="chat-title">🌿 AI Farmer Assistant</h4>
+            <button class="close-chat" onclick="toggleChat()">&times;</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages will be added dynamically -->
+        </div>
+        <div class="chat-input-area">
+            <button class="chat-voice-btn" onclick="startVoiceInput()" title="Voice Input">🎙️</button>
+            <input type="text" id="chatInput" class="chat-input" placeholder="Ask a farming question..." data-lang-key="chat-placeholder">
+            <button class="chat-send-btn" onclick="sendChat()" title="Send">➡️</button>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const confBar = document.getElementById('confBar');
+        setTimeout(() => {
+            confBar.style.width = '{{ result.confidence*100 }}%';
+        }, 100);
+    });
+</script>
+
+    </div>
+</div>
+</body>
+</html>
